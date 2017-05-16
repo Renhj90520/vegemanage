@@ -1,3 +1,23 @@
-<div id="page-wrapper">      
-  Categoryworks
+<div id="page-wrapper">
+  <h2>商品分类管理</h2>
+  <table class="table table-hover table-bordered">
+    <thead>
+      <tr>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categories">
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <form class="form-inline bottom">
+    <div class="form-group">
+      <label for="cateName">名称</label>
+      <input type="text" class="form-control" id="cateName" name="cateName">
+    </div>
+
+    <button class="btn btn-primary">添加</button>
+  </form>
 </div>

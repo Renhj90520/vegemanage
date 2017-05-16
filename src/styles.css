@@ -37,6 +37,12 @@ body{
 .sidebar .nav-third-level li a {
   padding-left: 52px;
 }
+
+.operator{
+  cursor: pointer;
+  margin-left: 5px;
+}
+
 @media (min-width: 768px) {
   .sidebar {
     z-index: 1;

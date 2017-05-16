@@ -17,4 +17,9 @@ export class UnitService {
         return this.http.post(baseUrl + 'units', unit)
             .map(res => res.json());
     }
+
+    removeUnit(id: number) {
+        return this.http.delete(baseUrl + 'units/' + id)
+            .map(res => res.json());
+    }
 }
