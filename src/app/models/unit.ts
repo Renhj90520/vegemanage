@@ -1,6 +1,5 @@
 export class Unit {
-
-    id: number;
+    id?: number;
     name: string = "";
     step: number;
 }

@@ -69,3 +69,8 @@ body{
     border-left: 1px solid #e7e7e7;
   }
 }
+
+.bottom{
+    position: absolute;
+    bottom: 30px;
+}
