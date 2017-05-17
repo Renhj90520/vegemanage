@@ -3,17 +3,17 @@
   <hr>
   <form class="form-inline">
     <div class="form-group">
-      <input type="search" class="form-control" placeholder="输入订单编号/手机号/姓名">
+      <input class="form-control" name="keyword" type="search" [(ngModel)]="condition.keyword" placeholder="输入订单编号/手机号/姓名">
     </div>
     <div class="form-group">
       <label for="begin">开始日期</label>
-      <input class="form-control" id="begin" type="date">
+      <input class="form-control" id="begin" name="begin" type="date" [(ngModel)]="condition.begin">
     </div>
     <div class="form-group">
       <label for="end">结束日期</label>
-      <input class="form-control" id="end" type="date">
+      <input class="form-control" id="end" name="end" type="date" [(ngModel)]="condition.end">
     </div>
-    <button class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-search"></i></button>
+    <button class="btn btn-primary btn-sm" (click)="onSearch()"><i class="glyphicon glyphicon-search"></i></button>
   </form>
 
   <table class="table tabler-hover">
@@ -40,13 +40,9 @@
       </tr>
     </tbody>
   </table>
-  <ul class="pagination bottom">
-    <li><a href="#">&laquo;</a></li>
-    <li class="active"><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li><a href="#">&raquo;</a></li>
+  <ul class="pagination bottom" *ngIf="pages.length>0">
+    <li [class.disabled]="index<=1"><a href="#" (click)="onPrev()">&laquo;</a></li>
+    <li *ngFor="let page of pages"><a href="#" (click)="onPageClick(page)" [class.active]="page==index">{{page}}</a></li>
+    <li [class.disabled]="index*20>=count"><a href="#" (click)="onNext()">&raquo;</a></li>
   </ul>
 </div>

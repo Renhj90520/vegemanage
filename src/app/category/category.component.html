@@ -26,7 +26,7 @@
     </div>
     <div class="form-group">
       <label for="upload">选择图标</label>
-      <input class="form-control" type="file" ng2FileSelect [uploader]="uploader" (change)="selectFileOnChanged($event)">
+      <input type="file" ng2FileSelect [uploader]="uploader" (change)="selectFileOnChanged($event)">
     </div>
     <div class="form-group">
       <div *ngFor="let item of uploader.queue">
