@@ -2,6 +2,9 @@
 body{
     padding-top: 50px;
 }
+h3{
+  margin-top: 0;
+}
 .container-fluid{
     padding: 0;
 }
@@ -57,7 +60,7 @@ body{
   }
 }
 #page-wrapper {
-  padding: 0 15px;
+  padding: 10px 15px 0 15px;
   min-height: 568px;
   background-color:white;
 }
@@ -65,7 +68,7 @@ body{
   #page-wrapper {
     position: inherit;
     margin: 0 0 0 250px;
-    padding: 0 30px;
+    padding: 10px 15px 0 15px;
     border-left: 1px solid #e7e7e7;
   }
 }
@@ -73,4 +76,11 @@ body{
 .bottom{
     position: absolute;
     bottom: 30px;
+}
+.right{
+  float: right;
+  margin-right: 10px;
+}
+.clear{
+  clear: both;
 }

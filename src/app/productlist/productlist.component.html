@@ -1,3 +1,52 @@
 <div id="page-wrapper">
-  Productlist works
+  <h3>商品管理</h3>
+  <hr>
+  <div class="condition">
+    <form class="form-inline">
+      <div class="form-group">
+        <label for="pname">名称:</label>
+        <input type="text" id="pname" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="pcategroy">分类：</label>
+        <select class="form-control" id="pcategory">
+          <option value="0">请选择分类</option>
+          <option value="category.id" *ngFor="let category of categories">{{category.name}}</option>
+        </select>
+      </div>
+      <button class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-search"></i></button>
+      <button class="btn btn-primary right">添加商品</button>
+    </form>
+  </div>
+  <hr class="clear">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>名称</th>
+        <th>价格</th>
+        <th>单位</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{product.name}}</td>
+        <td>{{product.price}}</td>
+        <td>{{product.unitName}}</td>
+        <td>
+          <i class="glyphicon glyphicon-edit"></i>
+          <i class="glyphicon glyphicon-trash operator"></i></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ul class="pagination bottom">
+    <li><a href="#">&laquo;</a></li>
+    <li class="active"><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">&raquo;</a></li>
+  </ul>
 </div>
