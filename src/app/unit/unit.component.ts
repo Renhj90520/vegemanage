@@ -16,8 +16,7 @@ export class UnitComponent implements OnInit {
   currUnit: Unit = new Unit();//TODO
   ngOnInit() {
     this.unitService.getAllUnits().subscribe(res => {
-      console.log('---------------->' + JSON.stringify(res));
-      this.units = res;
+      this.units = res.body;
     },
       err => {
         if (err) {

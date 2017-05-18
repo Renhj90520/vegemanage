@@ -27,8 +27,6 @@ export class ProductlistComponent implements OnInit {
       .subscribe(res => {
         this.count = res.body.count;
         this.products = res.body.items;
-        this.products = res.body;//TODO
-        // console.log('---------->' + JSON.stringify(res.body));
         let pager = this.pagerService.getPager(this.count, this.index);
         this.pages = pager.pages;
       });
