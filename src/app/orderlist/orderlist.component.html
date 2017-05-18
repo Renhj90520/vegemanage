@@ -42,7 +42,7 @@
   </table>
   <ul class="pagination bottom" *ngIf="pages.length>0">
     <li [class.disabled]="index<=1"><a href="#" (click)="onPrev()">&laquo;</a></li>
-    <li *ngFor="let page of pages"><a href="#" (click)="onPageClick(page)" [class.active]="page==index">{{page}}</a></li>
+    <li *ngFor="let page of pages" [class.active]="page==index"><a href="#" (click)="onPageClick(page)">{{page}}</a></li>
     <li [class.disabled]="index*20>=count"><a href="#" (click)="onNext()">&raquo;</a></li>
   </ul>
 </div>

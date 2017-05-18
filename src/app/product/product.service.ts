@@ -21,7 +21,7 @@ export class ProductService {
         let url = baseUrl + 'products?';
         url += 'index=' + index;
         url += '&perPage=' + this.perPage;
-        if (condition.category) {
+        if (condition.category && condition.category != 0) {
             url += '&category=' + condition.category;
         }
         if (condition.name) {

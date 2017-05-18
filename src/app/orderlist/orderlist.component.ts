@@ -45,6 +45,7 @@ export class OrderlistComponent implements OnInit {
   }
 
   onNext() {
+    this.index++;
     this.doLoading(this.index, this.condition);
   }
 }

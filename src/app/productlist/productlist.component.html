@@ -5,17 +5,17 @@
     <form class="form-inline">
       <div class="form-group">
         <label for="pname">名称:</label>
-        <input type="text" id="pname" class="form-control">
+        <input type="text" id="pname" name="pname" [(ngModel)]="condition.name" class="form-control">
       </div>
       <div class="form-group">
         <label for="pcategroy">分类：</label>
-        <select class="form-control" id="pcategory">
+        <select class="form-control" name="category" [(ngModel)]="condition.category" id="pcategory">
           <option value="0">请选择分类</option>
           <option value="category.id" *ngFor="let category of categories">{{category.name}}</option>
         </select>
       </div>
-      <button class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-search"></i></button>
-      <button class="btn btn-primary right">添加商品</button>
+      <button class="btn btn-primary btn-sm" (click)="onSearch()"><i class="glyphicon glyphicon-search"></i></button>
+      <button class="btn btn-primary right" (click)="onAddProduct()">添加商品</button>
     </form>
   </div>
   <hr class="clear">
@@ -34,19 +34,15 @@
         <td>{{product.price}}</td>
         <td>{{product.unitName}}</td>
         <td>
-          <i class="glyphicon glyphicon-edit"></i>
+          <i class="glyphicon glyphicon-edit operator"></i>
           <i class="glyphicon glyphicon-trash operator"></i></td>
       </tr>
     </tbody>
   </table>
 
-  <ul class="pagination bottom">
-    <li><a href="#">&laquo;</a></li>
-    <li class="active"><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li><a href="#">&raquo;</a></li>
+  <ul class="pagination bottom" *ngIf="pages.length>0">
+    <li [class.disabled]="index<=1"><a href="#" (click)="onPrev()">&laquo;</a></li>
+    <li *ngFor="let page of pages" [class.active]="page==index"><a href="#" (click)="onPageClick(page)">{{page}}</a></li>
+    <li [class.disabled]="index*20>=count"><a (click)="onNext()">&raquo;</a></li>
   </ul>
 </div>
