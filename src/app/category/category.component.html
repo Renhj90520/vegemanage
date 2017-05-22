@@ -22,7 +22,7 @@
   <form class="form-inline bottom">
     <div class="form-group">
       <label for="cateName">名称</label>
-      <input class="form-control" id="cateName" name="cateName" type="text">
+      <input class="form-control" id="cateName" name="cateName" [(ngModel)]="currCategory.name" type="text">
     </div>
     <div class="form-group">
       <label for="upload">选择图标</label>
@@ -38,6 +38,6 @@
           <button class="btn btn-xs btn-danger" (click)="item.remove()"><i class="glyphicon glyphicon-trash"></i>删除</button>
       </div>
     </div>
-    <button class="btn btn-primary">添加</button>
+    <button class="btn btn-primary" (click)="onSubmit()">添加</button>
   </form>
 </div>

@@ -18,6 +18,7 @@ export class CategoryComponent implements OnInit {
   });
 
   categories: Category[];
+  currCategory: Category = new Category();
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit() {
@@ -28,16 +29,26 @@ export class CategoryComponent implements OnInit {
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false;
     }
+
   }
 
   selectFileOnChanged() {
     this.uploader.queue[0].onSuccess = (res, status, headers) => {
       if (status == 200) {
-        console.log('-------------upload--------------');
-        console.log(JSON.stringify(res));
+        this.currCategory.iconpath = JSON.parse(res).path;
       } else {
       }
     };
+  }
+
+  onSubmit() {
+    this.categoryService.addCategory(this.currCategory)
+      .subscribe(res => {
+        if(res.state==1){
+          this.currCategory=new Category();
+          this.categories.push(res.body);
+        }
+      })
   }
 
 }
