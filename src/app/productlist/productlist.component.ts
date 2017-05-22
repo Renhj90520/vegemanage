@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PagerService } from '../shared/pager.service';
 import { ProductService } from '../product/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-productlist',
@@ -16,7 +17,7 @@ export class ProductlistComponent implements OnInit {
   pages: any[] = [];
 
   units: any[] = [];
-  constructor(private productService: ProductService, private pagerService: PagerService) { }
+  constructor(private productService: ProductService, private pagerService: PagerService, private router: Router) { }
 
   ngOnInit() {
     this.doLoading(this.index, this.condition);
@@ -51,6 +52,16 @@ export class ProductlistComponent implements OnInit {
   }
 
   onAddProduct() {
+    this.router.navigate(['product'], { replaceUrl: true });
+  }
 
+  onEdit(product) {
+    this.router.navigate(['productlist/' + product.id], { replaceUrl: true });
+  }
+  onDelete(product) {
+    this.productService.unshelveProduct(product.id)
+      .subscribe(res => {
+        console.log(JSON.stringify(res));
+      });
   }
 }

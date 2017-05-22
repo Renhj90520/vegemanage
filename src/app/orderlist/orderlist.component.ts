@@ -17,6 +17,8 @@ export class OrderlistComponent implements OnInit {
   index: number = 1;
   condition: any = {};
   pages: any[] = [];
+  currOrder: any;
+  reason: string;
   ngOnInit() {
     this.doLoading(this.index, this.condition);
   }
@@ -31,6 +33,7 @@ export class OrderlistComponent implements OnInit {
         this.orders = res.body.items;
         let pager = this.pagerService.getPager(this.count, this.index);
         this.pages = pager.pages;
+        console.log(JSON.stringify(this.orders));
       });
   }
 
@@ -47,5 +50,16 @@ export class OrderlistComponent implements OnInit {
   onNext() {
     this.index++;
     this.doLoading(this.index, this.condition);
+  }
+  onCancelOrder(order) {
+    this.currOrder = order;
+  }
+  onSubmitCancel() {
+    this.orderService.updateOrder(this.currOrder.id, "3", this.reason)
+      .subscribe(res => {
+        console.log(JSON.stringify(res));
+      })
+    console.log(JSON.stringify(this.currOrder));
+    console.log(this.reason);
   }
 }

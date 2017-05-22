@@ -74,7 +74,7 @@ h3{
 }
 
 .bottom{
-    position: fixed;
+    position: relative;
     bottom: 30px;
 }
 .right{

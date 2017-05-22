@@ -27,19 +27,30 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let order of orderlist">
+      <tr *ngFor="let order of orders">
         <td>{{order.id}}</td>
         <td>
           <p *ngFor="let product of order.products">
             {{product.name}} &nbsp; X &nbsp;{{product.count}} 小计：￥{{product.price*product.count}}
           </p>
         </td>
-        <td>{{order.createtime}}</td>
-        <td>{{order.state}}</td>
-        <td><i class="glyphicon glyphicon-trash" *ngIf="order.state==1"></i></td>
+        <td>{{order.createtime|date}}</td>
+        <td>{{order.state|orderstate}}</td>
+        <td><i class="glyphicon glyphicon-trash" role="button" (click)="onCancelOrder(order)" data-target="#cancelReason" data-toggle="modal" *ngIf="order.state==0"></i></td>
       </tr>
     </tbody>
   </table>
+  <div class="modal fade" id="cancelReason">
+    <div class="jumbotron">
+      <form>
+        <div class="form-group">
+          <label for="reason">取消原因</label>
+          <textarea name="creason" id="creason" [(ngModel)]="reason" rows="3" class="form-control"></textarea>
+        </div>
+        <button class="btn btn-primary" (click)="onSubmitCancel()">提交</button>
+      </form>
+    </div>
+  </div>
   <ul class="pagination bottom" *ngIf="pages.length>0">
     <li [class.disabled]="index<=1"><a href="#" (click)="onPrev()">&laquo;</a></li>
     <li *ngFor="let page of pages" [class.active]="page==index"><a href="#" (click)="onPageClick(page)">{{page}}</a></li>

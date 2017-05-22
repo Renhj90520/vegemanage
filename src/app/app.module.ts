@@ -16,6 +16,7 @@ import { AdminComponent } from './admin/admin.component';
 import { LoginComponent } from './login/login.component';
 
 import { FileUploadModule } from 'ng2-file-upload';
+import { OrderPipe } from './shared/orderstate.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     OrderlistComponent,
     UserComponent,
     AdminComponent,
-    LoginComponent
+    LoginComponent,
+    OrderPipe
   ],
   imports: [
     BrowserModule,

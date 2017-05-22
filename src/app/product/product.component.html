@@ -3,7 +3,7 @@
     <input type="hidden" name="id" [(ngModel)]="newProduct.id">
     <div class="form-group">
       <label for="prodName">名称</label>
-      <input type="text" class="form-control" id="prodName" name="prodName">
+      <input type="text" class="form-control" id="prodName" [(ngModel)]="newProduct.name" name="prodName">
     </div>
     <div class="form-group">
       <label for="count">数量</label>
@@ -12,13 +12,13 @@
     <div class="form-group">
       <label for="unit">单位</label>
       <select name="unit" id="unit" class="form-control" (change)="onUnitChange()" [(ngModel)]="newProduct.unitId">
-        <option value="unit.id" *ngFor="let unit of units">{{unit.name}}</option>
+        <option value="{{unit.id}}" *ngFor="let unit of units">{{unit.name}}</option>
       </select>
     </div>
     <div class="form-group">
       <label for="category">分类</label>
       <select name="category" id="category" class="form-control" [(ngModel)]="newProduct.category">
-        <option value="category.id" *ngFor="let category of categories">{{category.name}}</option>
+        <option value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</option>
       </select>
     </div>
     <div class="form-group">

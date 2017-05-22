@@ -26,8 +26,8 @@ export class OrderService {
             .map(res => res.json());
     }
 
-    updateOrder(id: number, state: string) {
-        return this.http.put(baseUrl + 'orders/' + id, { "state": state })
+    updateOrder(id: number, state: string, reason: string) {
+        return this.http.put(baseUrl + 'orders/' + id, { "state": state, "cancelReason": reason })
             .map(res => res.json());
     }
 }

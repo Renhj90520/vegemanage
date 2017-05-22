@@ -34,8 +34,8 @@
         <td>{{product.price}}</td>
         <td>{{product.unitName}}</td>
         <td>
-          <i class="glyphicon glyphicon-edit operator"></i>
-          <i class="glyphicon glyphicon-trash operator"></i></td>
+          <i class="glyphicon glyphicon-edit operator" (click)="onEdit(product)"></i>
+          <i class="glyphicon glyphicon-trash operator" (click)="onDelete(product)"></i></td>
       </tr>
     </tbody>
   </table>
