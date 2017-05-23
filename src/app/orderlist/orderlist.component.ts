@@ -1,8 +1,9 @@
+///<reference path="../../../typings/globals/jquery/index.d.ts" />
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
 
 import { PagerService } from '../shared/pager.service';
-
+declare var $: JQueryStatic;
 @Component({
   selector: 'app-orderlist',
   templateUrl: './orderlist.component.html',
@@ -27,8 +28,10 @@ export class OrderlistComponent implements OnInit {
     this.doLoading(this.index, this.condition);
   }
   doLoading(index: number, condition: any) {
+    this.condition.noshowRemove = true;
     this.orderService.getOrders(this.index, this.condition)
       .subscribe(res => {
+        console.log(JSON.stringify(res));
         this.count = res.body.count;
         this.orders = res.body.items;
         let pager = this.pagerService.getPager(this.count, this.index);
@@ -55,11 +58,26 @@ export class OrderlistComponent implements OnInit {
     this.currOrder = order;
   }
   onSubmitCancel() {
-    this.orderService.updateOrder(this.currOrder.id, "3", this.reason)
+    this.currOrder.state = "2";
+    this.currOrder.reason = this.reason;
+    this.orderService.updateOrder(this.currOrder)
       .subscribe(res => {
-        console.log(JSON.stringify(res));
+        if (res.state == 1) {
+          $('.glyphicon.glyphicon-remove.operator').click();
+          console.log(JSON.stringify(this.currOrder));
+        }
       })
-    console.log(JSON.stringify(this.currOrder));
-    console.log(this.reason);
+  }
+
+  onRemoveOrder(order) {
+    if (confirm('确认删除该订单吗？')) {
+      this.orderService.removeOrder(order.id)
+        .subscribe(res => {
+          console.log(JSON.stringify(res));
+          if (res.state == 1) {
+            this.orders.splice(this.orders.indexOf(order), 1);
+          }
+        })
+    }
   }
 }

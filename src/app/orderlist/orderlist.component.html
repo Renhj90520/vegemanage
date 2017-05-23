@@ -36,7 +36,9 @@
         </td>
         <td>{{order.createtime|date}}</td>
         <td>{{order.state|orderstate}}</td>
-        <td><i class="glyphicon glyphicon-trash" role="button" (click)="onCancelOrder(order)" data-target="#cancelReason" data-toggle="modal" *ngIf="order.state==0"></i></td>
+        <td><i class="glyphicon glyphicon-trash" role="button" (click)="onRemoveOrder(order)"></i>
+          <i class="glyphicon glyphicon-remove operator" data-target="#cancelReason" data-toggle="modal" role="button" (click)="onCancelOrder(order)" *ngIf="order.state==0"></i>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -45,7 +47,7 @@
       <form>
         <div class="form-group">
           <label for="reason">取消原因</label>
-          <textarea name="creason" id="creason" [(ngModel)]="reason" rows="3" class="form-control"></textarea>
+          <textarea class="form-control" id="creason" name="creason" [(ngModel)]="reason" rows="3"></textarea>
         </div>
         <button class="btn btn-primary" (click)="onSubmitCancel()">提交</button>
       </form>

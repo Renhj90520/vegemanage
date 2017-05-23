@@ -22,12 +22,20 @@ export class OrderService {
         if (condition.end) {
             url += '&end=' + condition.end;
         }
+        if (condition.noshowRemove) {
+            url += '&noshowRemove=true'
+        }
         return this.http.get(url)
             .map(res => res.json());
     }
 
-    updateOrder(id: number, state: string, reason: string) {
-        return this.http.put(baseUrl + 'orders/' + id, { "state": state, "cancelReason": reason })
+    updateOrder(order) {
+        return this.http.put(baseUrl + 'orders/', order)
+            .map(res => res.json());
+    }
+
+    removeOrder(id: number) {
+        return this.http.delete(baseUrl + 'orders/' + id)
             .map(res => res.json());
     }
 }

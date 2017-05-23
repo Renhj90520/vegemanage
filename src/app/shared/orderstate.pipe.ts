@@ -12,4 +12,4 @@ export class OrderPipe implements PipeTransform {
             case 3: return "交易完成";
         }
     }
-} 
+}
