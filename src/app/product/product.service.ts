@@ -17,15 +17,24 @@ export class ProductService {
             .map(res => res.json());
     }
 
-    getProducts(index: number, condition: any) {
-        let url = baseUrl + 'products?';
-        url += 'index=' + index;
-        url += '&perPage=' + this.perPage;
+    getProducts(id?: number, index?: number, perPage?: number, condition?: any) {
+        let url = baseUrl + 'products';
+        var conditions = [];
+        if (index) {
+            conditions.push('index=' + index);
+        }
+        if (perPage) {
+            conditions.push("perPage=" + perPage);
+        }
+
         if (condition.category && condition.category != 0) {
-            url += '&category=' + condition.category;
+            conditions.push('category=' + condition.category);
         }
         if (condition.name) {
-            url += '&name=' + condition.name;
+            conditions.push('name=' + condition.name);
+        }
+        if (conditions.length > 0) {
+
         }
         return this.http.get(url)
             .map(res => res.json());

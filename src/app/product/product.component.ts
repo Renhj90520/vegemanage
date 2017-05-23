@@ -4,6 +4,8 @@ import { ProductService } from './product.service';
 import { CategoryService } from '../category/category.service';
 import { Product } from '../models/product';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { FileUploader } from 'ng2-file-upload';
+import { baseUrl } from '../shared/settings';
 
 @Component({
   selector: 'app-product',
@@ -15,6 +17,12 @@ export class ProductComponent implements OnInit {
   newProduct: Product = new Product();
   units: any[] = [];
   categories: any[] = [];
+
+  uploader: FileUploader = new FileUploader({
+    url: baseUrl + 'upload',
+    method: 'POST',
+    itemAlias: 'upload'
+  });
   constructor(private productService: ProductService,
     private unitService: UnitService,
     private categoryService: CategoryService,
@@ -33,9 +41,10 @@ export class ProductComponent implements OnInit {
       .subscribe(res => {
         this.categories = res.body;
       });
-      this.route.params.forEach(element => {
-        
-      });
+    this.route.params.forEach((params: Params) => {
+      let id = +params['id'];
+      this.productService.getProducts()
+    });
   }
 
   onUnitChange() {
