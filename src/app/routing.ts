@@ -6,6 +6,7 @@ import { ProductComponent } from './product/product.component';
 import { ProductlistComponent } from './productlist/productlist.component';
 import { UnitComponent } from './unit/unit.component';
 import { UserComponent } from './user/user.component';
+import { LoginComponent } from './login/login.component';
 
 export const routing = RouterModule.forRoot([
     { path: '', component: OrderlistComponent },
@@ -15,5 +16,6 @@ export const routing = RouterModule.forRoot([
     { path: 'productlist/:id', component: ProductComponent },
     { path: 'unit', component: UnitComponent },
     { path: 'product', component: ProductComponent },
-    { path: 'user', component: UserComponent }
+    { path: 'user', component: UserComponent },
+    { path: 'login', component: LoginComponent }
 ]);
