@@ -89,3 +89,9 @@ h3{
 .pagination>li>a{
   cursor: pointer;
 }
+
+.nopadding{
+  padding-left: 0;
+  padding-right: 0;
+  padding-bottom: 10px;
+}

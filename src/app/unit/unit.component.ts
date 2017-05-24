@@ -40,7 +40,6 @@ export class UnitComponent implements OnInit {
 
   onEdit(index) {
     this.currUnit = this.units[index];
-    console.log(JSON.stringify(this.currUnit));
   }
 
   onRemove(index) {

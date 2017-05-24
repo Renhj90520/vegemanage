@@ -41,10 +41,20 @@ export class ProductComponent implements OnInit {
       .subscribe(res => {
         this.categories = res.body;
       });
+    let id;
     this.route.params.forEach((params: Params) => {
-      let id = +params['id'];
-      this.productService.getProducts()
+      id = +params['id'];
     });
+    if (id) {
+      this.productService.getProducts(id).subscribe(res => {
+        if (res.state == 1) {
+          this.newProduct = res.body.items[0] || new Product();
+        }
+      },
+        err => {
+          console.log(err);
+        })
+    }
   }
 
   onUnitChange() {
@@ -54,10 +64,29 @@ export class ProductComponent implements OnInit {
   }
 
   onSubmit() {
-    this.productService.updateProducts(this.newProduct.id, this.newProduct)
-      .subscribe(res => {
-        console.log(JSON.stringify(res));
-      })
+    if (this.newProduct.id) {
+      this.productService.updateProducts(this.newProduct.id, this.newProduct)
+        .subscribe(res => {
+          console.log(JSON.stringify(res));
+        })
+    } else {
+      this.productService.addProduct(this.newProduct)
+        .subscribe(res => {
+          console.log(JSON.stringify(res));
+        });
+    }
+  }
+  selectFileChanged() {
+    let length = this.uploader.queue.length;
+    if (length > 0) {
+
+    }
+    this.uploader.queue[0].onSuccess = (res, status, headers) => {
+      if (status == 200) {
+        // this.currCategory.iconpath = JSON.parse(res).path;
+      } else {
+      }
+    };
   }
 
 }

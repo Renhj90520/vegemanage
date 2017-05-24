@@ -47,7 +47,6 @@ export class ProductlistComponent implements OnInit {
   }
   onNext() {
     this.index++;
-    console.log('------------>index:' + this.index);
     this.doLoading(this.index, this.condition);
   }
 

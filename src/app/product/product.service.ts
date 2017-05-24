@@ -27,15 +27,18 @@ export class ProductService {
             conditions.push("perPage=" + perPage);
         }
 
-        if (condition.category && condition.category != 0) {
+        if (condition && condition.category && condition.category != 0) {
             conditions.push('category=' + condition.category);
         }
-        if (condition.name) {
+
+        if (condition && condition.name) {
             conditions.push('name=' + condition.name);
         }
-        if (conditions.length > 0) {
 
+        if (condition && conditions.length > 0) {
+            url += '?' + conditions.join('&');
         }
+
         return this.http.get(url)
             .map(res => res.json());
     }

@@ -1,40 +1,63 @@
 <div id="page-wrapper">
   <form>
     <fieldset>
-
       <input type="hidden" name="id" [(ngModel)]="newProduct.id">
       <div class="form-group">
-        <label for="prodName">名称</label>
-        <input type="text" class="form-control" id="prodName" [(ngModel)]="newProduct.name" name="prodName">
+        <div class="col-sm-8 nopadding">
+          <label for="prodName">名称</label>
+          <input type="text" class="form-control" id="prodName" [(ngModel)]="newProduct.name" name="prodName">
+        </div>
       </div>
       <div class="form-group">
-        <label for="count">数量</label>
-        <input type="number" class="form-control" id="count" name="count" [(ngModel)]="newProduct.totalCount">
+        <div class="col-sm-8 nopadding">
+          <label for="count">数量</label>
+          <input type="number" class="form-control" id="count" name="count" [(ngModel)]="newProduct.totalCount">
+        </div>
       </div>
       <div class="form-group">
-        <label for="unit">单位</label>
-        <select name="unit" id="unit" class="form-control" (change)="onUnitChange()" [(ngModel)]="newProduct.unitId">
-        <option value="{{unit.id}}" *ngFor="let unit of units">{{unit.name}}</option>
-      </select>
+        <div class="col-sm-8 nopadding">
+          <label for="unit">单位</label>
+          <select name="unit" id="unit" class="form-control" (change)="onUnitChange()" [(ngModel)]="newProduct.unitId">
+            <option value="{{unit.id}}" *ngFor="let unit of units">{{unit.name}}</option>
+          </select>
+        </div>
       </div>
       <div class="form-group">
-        <label for="category">分类</label>
-        <select name="category" id="category" class="form-control" [(ngModel)]="newProduct.category">
+        <div class="col-sm-8 nopadding">
+          <label for="category">分类</label>
+          <select name="category" id="category" class="form-control" [(ngModel)]="newProduct.category">
         <option value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</option>
       </select>
+        </div>
       </div>
       <div class="form-group">
-        <label for="price">价格</label>
-        <input type="number" class="form-control" id="price" name="price" [(ngModel)]="newProduct.price">
+        <div class="col-sm-8 nopadding">
+          <label for="price">价格</label>
+          <input type="number" class="form-control" id="price" name="price" [(ngModel)]="newProduct.price">
+        </div>
       </div>
       <div class="form-group">
-        <label for="description">描述</label>
-        <input type="textarea" class="form-control" id="description" name="description" rows="3" [(ngModel)]="newProduct.description">
+        <div class="col-sm-8 nopadding">
+          <label for="description">描述</label>
+          <input type="textarea" class="form-control" id="description" name="description" rows="3" [(ngModel)]="newProduct.description">
+        </div>
       </div>
       <div class="form-group">
-        <label for="upload">选择图片</label>
-        <input type="file" ng2FileSelect multiple [uploader]="uploader" (change)="selectFileChanged($event)">
+        <div class="col-sm-8 nopadding">
+          <label for="upload">选择图片</label>
+          <input type="file" ng2FileSelect multiple [uploader]="uploader" (change)="selectFileChanged($event)">
+        </div>
       </div>
     </fieldset>
+    <div class="pictures row">
+      <div class="col-sm-4" *ngFor="let item of uploader.queue">
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" *ngIf="item" [ngStyle]="{'width':item.progress+'%'}"></div>
+        </div>
+        <button class="btn btn-xs btn-primary" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess"><i class="glyphicon glyphicon-upload"></i>上传</button>
+        <button class="btn btn-xs btn-danger" (click)="item.remove()"><i class="glyphicon glyphicon-trash"></i>删除</button>
+      </div>
+    </div>
+    <button class="btn btn-primary" style="margin-top:10px;" (click)="onSubmit()">提交</button>
   </form>
 </div>
