@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
 
 import { PagerService } from '../shared/pager.service';
+import { PatchDoc } from '../models/patchdoc';
 declare var $: JQueryStatic;
 @Component({
   selector: 'app-orderlist',
@@ -19,7 +20,7 @@ export class OrderlistComponent implements OnInit {
   condition: any = {};
   pages: any[] = [];
   currOrder: any;
-  reason: string;
+  reason: string = "超出配送范围，谢谢关注。";
   ngOnInit() {
     this.doLoading(this.index, this.condition);
   }
@@ -56,13 +57,32 @@ export class OrderlistComponent implements OnInit {
     this.currOrder = order;
   }
   onSubmitCancel() {
-    this.currOrder.state = "2";
-    this.currOrder.reason = this.reason;
-    this.orderService.updateOrder(this.currOrder)
+
+    var patchDoc = [];
+    let stateOp: PatchDoc = new PatchDoc();
+    stateOp.path = '/state';
+    stateOp.value = "2";
+    patchDoc.push(stateOp);
+    let reasonOp: PatchDoc = new PatchDoc();
+    reasonOp.path = '/cancelreason';
+    reasonOp.value = this.reason;
+    patchDoc.push(reasonOp);
+    let canceltimeOp = new PatchDoc();
+    canceltimeOp.path = "canceltime";
+    canceltimeOp.value = new Date();
+    patchDoc.push(canceltimeOp);
+
+    this.orderService.updateOrder(this.currOrder.id, patchDoc)
       .subscribe(res => {
         if (res.state == 1) {
-          $('.glyphicon.glyphicon-remove.operator').click();
+          this.currOrder.state = 2;
+          this.currOrder.reason = this.reason;
+          // $('.glyphicon.glyphicon-remove.operator').click();
+        } else {
+          alert(res.message);
         }
+      }, err => {
+        alert(err);
       })
   }
 
@@ -76,4 +96,26 @@ export class OrderlistComponent implements OnInit {
         })
     }
   }
+
+  onComplete(order) {
+    let patchDoc = [];
+    let stateOp: PatchDoc = new PatchDoc();
+    stateOp.path = "/state";
+    stateOp.value = "3";
+    patchDoc.push(stateOp);
+    let finishTimeOp: PatchDoc = new PatchDoc();
+    finishTimeOp.path = "finishtime";
+    finishTimeOp.value = new Date();
+    patchDoc.push(finishTimeOp);
+    this.orderService.updateOrder(order.id, patchDoc)
+      .subscribe(res => {
+        if (res.state == 1) {
+          order.state = 3;
+        }
+        else
+          alert(res.message);
+      },
+      err => alert(err));
+  }
+
 }

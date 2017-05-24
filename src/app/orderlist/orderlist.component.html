@@ -34,10 +34,11 @@
             {{product.name}} &nbsp; X &nbsp;{{product.count}} 小计：￥{{product.price*product.count}}
           </p>
         </td>
-        <td>{{order.createtime|date}}</td>
-        <td>{{order.state|orderstate}}</td>
+        <td>{{order.createTime | date }}</td>
+        <td>{{order.state | orderstate}}</td>
         <td><i class="glyphicon glyphicon-trash" role="button" (click)="onRemoveOrder(order)"></i>
           <i class="glyphicon glyphicon-remove operator" data-target="#cancelReason" data-toggle="modal" role="button" (click)="onCancelOrder(order)" *ngIf="order.state==0"></i>
+          <i class="glyphicon glyphicon-ok" role="button" (click)="onComplete(order)" *ngIf="order.state==0||order.state==1"></i>
         </td>
       </tr>
     </tbody>
@@ -49,7 +50,7 @@
           <label for="reason">取消原因</label>
           <textarea class="form-control" id="creason" name="creason" [(ngModel)]="reason" rows="3"></textarea>
         </div>
-        <button class="btn btn-primary" (click)="onSubmitCancel()">提交</button>
+        <button class="btn btn-primary" data-target="#cancelReason" data-toggle="modal" (click)="onSubmitCancel()">提交</button>
       </form>
     </div>
   </div>

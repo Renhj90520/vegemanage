@@ -29,8 +29,8 @@ export class OrderService {
             .map(res => res.json());
     }
 
-    updateOrder(order) {
-        return this.http.put(baseUrl + 'orders/', order)
+    updateOrder(id, order) {
+        return this.http.patch(baseUrl + 'orders/' + id, order)
             .map(res => res.json());
     }
 
