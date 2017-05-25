@@ -79,14 +79,33 @@ export class ProductComponent implements OnInit {
   selectFileChanged() {
     let length = this.uploader.queue.length;
     if (length > 0) {
-
+      this.uploader.queue[length - 1].onSuccess = (res, status, headers) => {
+        if (status == 200) {
+          let iii = length - 1;
+          console.log('------------>iii:' + iii);
+          console.log(res);
+          let pic = JSON.parse(res);
+          this.newProduct.pictures.push(pic);
+          this.uploader.queue[iii].remove();
+        } else {
+        }
+      };
     }
-    this.uploader.queue[0].onSuccess = (res, status, headers) => {
-      if (status == 200) {
-        // this.currCategory.iconpath = JSON.parse(res).path;
-      } else {
-      }
-    };
+
+  }
+  onPicRemove(i) {
+    let pic = this.uploader.queue[i];
+    if (pic.isUploading) {
+      this.uploader.queue[i].remove();
+    }
   }
 
+  onPicedRemove(pic) {
+    this.productService.removePic(this.newProduct.id, pic.id)
+      .subscribe(res => {
+        if (res.state == 1) {
+          this.newProduct.pictures.splice(this.newProduct.pictures.indexOf(pic), 1);
+        }
+      })
+  }
 }

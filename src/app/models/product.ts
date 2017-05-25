@@ -8,4 +8,5 @@ export class Product {
     price: number;
     description: string;
     categoryId: number;
+    pictures: any[] = [];
 }

@@ -47,4 +47,9 @@ export class ProductService {
         return this.http.put(baseUrl + 'products/' + id, product)
             .map(res => res.json());
     }
+
+    removePic(productid, picid) {
+        return this.http.delete(baseUrl + 'products/' + productid + '/' + picid)
+            .map(res => res.json());
+    }
 }

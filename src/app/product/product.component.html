@@ -50,12 +50,16 @@
       </div>
     </fieldset>
     <div class="pictures row">
-      <div class="col-sm-4" *ngFor="let item of uploader.queue">
+      <div class="col-sm-4" *ngFor="let pic of newProduct.pictures;let ii of index">
+        <img src="{{pic.path}}" class="productPic">
+        <button class="btn btn-xs" (click)="onPicedRemove(pic)">删除</button>
+      </div>
+      <div class="col-sm-4" *ngFor="let item of uploader.queue;let i of index">
         <div class="progress">
           <div class="progress-bar" role="progressbar" *ngIf="item" [ngStyle]="{'width':item.progress+'%'}"></div>
         </div>
         <button class="btn btn-xs btn-primary" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess"><i class="glyphicon glyphicon-upload"></i>上传</button>
-        <button class="btn btn-xs btn-danger" (click)="item.remove()"><i class="glyphicon glyphicon-trash"></i>删除</button>
+        <button class="btn btn-xs btn-danger" (click)="onPicRemove(i)"><i class="glyphicon glyphicon-trash"></i>删除</button>
       </div>
     </div>
     <button class="btn btn-primary" style="margin-top:10px;" (click)="onSubmit()">提交</button>
