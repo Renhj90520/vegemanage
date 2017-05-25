@@ -35,6 +35,8 @@ export class UnitComponent implements OnInit {
         } else {
           alert('添加失败' + res.message);
         }
+      }, err => {
+        alert(err);
       });
   }
 
@@ -49,6 +51,9 @@ export class UnitComponent implements OnInit {
         if (res.state == 1) {
           this.units.splice(index, 1);
         }
+      },
+      err => {
+        alert(err);
       });
   }
 }

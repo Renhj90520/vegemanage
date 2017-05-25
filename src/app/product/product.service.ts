@@ -48,8 +48,8 @@ export class ProductService {
             .map(res => res.json());
     }
 
-    removePic(productid, picid) {
-        return this.http.delete(baseUrl + 'products/' + productid + '/' + picid)
+    removePic(picpath) {
+        return this.http.delete(baseUrl + 'products/pictures/' + picpath)
             .map(res => res.json());
     }
 }

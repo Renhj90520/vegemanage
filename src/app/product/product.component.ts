@@ -67,26 +67,33 @@ export class ProductComponent implements OnInit {
     if (this.newProduct.id) {
       this.productService.updateProducts(this.newProduct.id, this.newProduct)
         .subscribe(res => {
-          console.log(JSON.stringify(res));
+          if (res.state == 1) {
+            alert("修改成功");
+            this.newProduct = new Product();
+          } else {
+            alert("修改失败：" + res.message);
+          }
+        }, err => {
+          alert(err);
         })
     } else {
       this.productService.addProduct(this.newProduct)
         .subscribe(res => {
-          console.log(JSON.stringify(res));
+          alert("添加成功");
+          this.newProduct = new Product();
         });
     }
   }
   selectFileChanged() {
     let length = this.uploader.queue.length;
     if (length > 0) {
-      this.uploader.queue[length - 1].onSuccess = (res, status, headers) => {
+      let pic = this.uploader.queue[length - 1];
+      pic.onSuccess = (res, status, headers) => {
         if (status == 200) {
-          let iii = length - 1;
-          console.log('------------>iii:' + iii);
-          console.log(res);
-          let pic = JSON.parse(res);
-          this.newProduct.pictures.push(pic);
-          this.uploader.queue[iii].remove();
+          let ppp = pic;
+          let result = JSON.parse(res);
+          this.newProduct.pictures.push(result.body);
+          ppp.remove();
         } else {
         }
       };
@@ -101,11 +108,14 @@ export class ProductComponent implements OnInit {
   }
 
   onPicedRemove(pic) {
-    this.productService.removePic(this.newProduct.id, pic.id)
+    let fileName = pic.path.substring(pic.path.lastIndexOf('/'));
+    console.log(JSON.stringify(fileName));
+    this.productService.removePic(fileName)
       .subscribe(res => {
         if (res.state == 1) {
           this.newProduct.pictures.splice(this.newProduct.pictures.indexOf(pic), 1);
         }
       })
   }
+
 }

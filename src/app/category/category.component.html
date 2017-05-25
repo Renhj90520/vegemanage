@@ -11,7 +11,7 @@
     <tbody>
       <tr *ngFor="let category of categories">
         <td>{{category.name}}</td>
-        <td>{{category.iconpath}}</td>
+        <td>{{category.iconPath}}</td>
         <td>
           <i class="glyphicon glyphicon-edit operator"></i>
           <i class="glyphicon glyphicon-remove"></i>
@@ -29,12 +29,15 @@
       <input type="file" ng2FileSelect [uploader]="uploader" (change)="selectFileOnChanged($event)">
     </div>
     <div class="form-group">
+      <div *ngIf="currCategory.iconPath">
+        <img src="currCategory.iconPath" alt="" class="uploadPic">
+        <button class="btn btn-danger btn-xs" (click)="onPicRemove()">删除</button>
+      </div>
       <div *ngFor="let item of uploader.queue">
           <div class="progress">
             <div class="progress-bar" role="progressbar" *ngIf="item" [ngStyle]="{'width':item.progress+'%'}"></div>
           </div>
           <button class="btn btn-xs btn-primary" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess"><i class="glyphicon glyphicon-upload"></i>上传</button>
-          <!--<button class="btn btn-xs btn-warning"><i class="glyphicon glyphicon-ban-circle"></i>取消</button>-->
           <button class="btn btn-xs btn-danger" (click)="item.remove()"><i class="glyphicon glyphicon-trash"></i>删除</button>
       </div>
     </div>

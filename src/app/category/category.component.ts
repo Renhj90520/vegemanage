@@ -35,7 +35,7 @@ export class CategoryComponent implements OnInit {
   selectFileOnChanged() {
     this.uploader.queue[0].onSuccess = (res, status, headers) => {
       if (status == 200) {
-        this.currCategory.iconpath = JSON.parse(res).path;
+        this.currCategory.iconPath = JSON.parse(res).body.path;
       } else {
       }
     };
@@ -44,11 +44,22 @@ export class CategoryComponent implements OnInit {
   onSubmit() {
     this.categoryService.addCategory(this.currCategory)
       .subscribe(res => {
-        if(res.state==1){
-          this.currCategory=new Category();
+        if (res.state == 1) {
+          this.currCategory = new Category();
           this.categories.push(res.body);
         }
       })
   }
-
+  onPicRemove() {
+    this.categoryService.removePic(this.currCategory.id, this.currCategory.iconPath)
+      .subscribe(res => {
+        if (res.state == 1) {
+          this.currCategory.iconPath = null;
+        } else {
+          alert(res.message);
+        }
+      }, err => {
+        alert(err);
+      })
+  }
 }

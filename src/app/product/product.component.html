@@ -51,8 +51,8 @@
     </fieldset>
     <div class="pictures row">
       <div class="col-sm-4" *ngFor="let pic of newProduct.pictures;let ii of index">
-        <img src="{{pic.path}}" class="productPic">
-        <button class="btn btn-xs" (click)="onPicedRemove(pic)">删除</button>
+        <img src="{{pic.path}}" class="uploadPic">
+        <button class="btn btn-danger btn-xs" (click)="onPicedRemove(pic)">删除</button>
       </div>
       <div class="col-sm-4" *ngFor="let item of uploader.queue;let i of index">
         <div class="progress">
