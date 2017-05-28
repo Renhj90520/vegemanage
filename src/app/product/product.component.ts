@@ -30,6 +30,9 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.uploader.onAfterAddingFile = (file) => {
+      file.withCredentials = false;
+    }
     this.unitService.getAllUnits()
       .subscribe(res => {
         this.units = res.body;
@@ -52,13 +55,13 @@ export class ProductComponent implements OnInit {
         }
       },
         err => {
-          console.log(err);
+          alert(err);
         })
     }
   }
 
-  onUnitChange() {
-    let unit = this.units.filter(u => u.id == this.newProduct.unitId)[0];
+  onUnitChange(newValue) {
+    let unit = this.units.filter(u => u.id == newValue)[0];
     this.newProduct.unitName = unit.name;
     this.newProduct.step = unit.step;
   }
@@ -109,13 +112,15 @@ export class ProductComponent implements OnInit {
 
   onPicedRemove(pic) {
     let fileName = pic.path.substring(pic.path.lastIndexOf('/'));
-    console.log(JSON.stringify(fileName));
     this.productService.removePic(fileName)
       .subscribe(res => {
         if (res.state == 1) {
           this.newProduct.pictures.splice(this.newProduct.pictures.indexOf(pic), 1);
         }
       })
+  }
+  onCateChange(newCate) {
+    this.newProduct.categoryId = newCate;
   }
 
 }

@@ -27,21 +27,21 @@
       <div class="navbar-default navbar-collapse sidebar collapse" role="navigation">
         <div>
           <ul class="nav">
-            <li><a href="orderlist"><i class="glyphicon glyphicon-list-alt"></i> 订单管理</a></li>
-            <li><a href="#">商品管理</a>
-              <ul class="nav nav-second-level">
-                <li><a href="productlist">商品列表</a></li>
-                <li><a href="product">添加商品</a></li>
-              </ul>
-            </li>
-            <li><a href="user">用户管理</a></li>
-            <li>
-              <a href="#"><i class="glyphicon glyphicon-cog"></i>系统设置 <span class="fa arrow"></span></a>
-              <ul class="nav nav-second-level">
-                <li><a href="unit">单位管理</a></li>
-                <li><a href="category">商品分类管理</a></li>
-              </ul>
-            </li>
+            <li><a routerLink="/orderlist"><i class="glyphicon glyphicon-list-alt"></i> 订单管理</a></li>
+            <!--<li><a>商品管理</a>
+              <ul class="nav nav-second-level">-->
+                <li><a routerLink="/productlist">商品列表</a></li>
+                <li><a routerLink="/product">添加商品</a></li>
+              <!--</ul>
+            </li>-->
+            <li><a routerLink="user">用户管理</a></li>
+            <!--<li>
+              <a ><i class="glyphicon glyphicon-cog"></i>系统设置 <span class="fa arrow"></span></a>
+              <ul class="nav nav-second-level">-->
+                <li><a routerLink="/unit">单位管理</a></li>
+                <li><a routerLink="/category">商品分类管理</a></li>
+              <!--</ul>
+            </li>-->
           </ul>
         </div>
       </div>

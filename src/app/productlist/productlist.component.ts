@@ -60,7 +60,6 @@ export class ProductlistComponent implements OnInit {
   onDelete(product) {
     this.productService.unshelveProduct(product.id)
       .subscribe(res => {
-        console.log(JSON.stringify(res));
       });
   }
 }

@@ -36,6 +36,8 @@ export class CategoryComponent implements OnInit {
     this.uploader.queue[0].onSuccess = (res, status, headers) => {
       if (status == 200) {
         this.currCategory.iconPath = JSON.parse(res).body.path;
+        if (this.uploader.queue && this.uploader.queue.length > 0)
+          this.uploader.queue[0].remove();
       } else {
       }
     };
@@ -47,11 +49,15 @@ export class CategoryComponent implements OnInit {
         if (res.state == 1) {
           this.currCategory = new Category();
           this.categories.push(res.body);
+        } else {
+          alert(res.message);
         }
+      }, err => {
+        alert(err);
       })
   }
   onPicRemove() {
-    this.categoryService.removePic(this.currCategory.id, this.currCategory.iconPath)
+    this.categoryService.removePic(this.currCategory.id, this.currCategory.iconPath.substring(this.currCategory.iconPath.lastIndexOf('/') + 1))
       .subscribe(res => {
         if (res.state == 1) {
           this.currCategory.iconPath = null;
@@ -61,5 +67,32 @@ export class CategoryComponent implements OnInit {
       }, err => {
         alert(err);
       })
+  }
+
+  onEdit(category) {
+    if (this.currCategory && this.currCategory.iconPath) {
+      this.categoryService.removePic(0, this.currCategory.iconPath)
+        .subscribe(res => {
+
+        });
+    }
+    this.currCategory = category;
+    if (this.uploader.queue.length > 0) {
+      this.uploader.queue.forEach(item => {
+        item.remove();
+      });
+    }
+  }
+  onRemove(category) {
+    if (confirm('确定要删除该商品分类吗？')) {
+      this.categoryService.deleteCategory(category.id)
+        .subscribe(res => {
+          if (res.state == 1) {
+            this.categories.splice(this.categories.indexOf(category), 1);
+          } else {
+            alert(res.message);
+          }
+        }, err => alert(err));
+    }
   }
 }

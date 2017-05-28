@@ -25,7 +25,7 @@ export class CategoryService {
     }
 
     removePic(id, path) {
-        return this.http.delete(baseUrl + 'categries/' + id + '/pictures/' + path)
+        return this.http.delete(baseUrl + 'categories/' + id + '/pictures/' + path)
             .map(res => res.json());
     }
 }

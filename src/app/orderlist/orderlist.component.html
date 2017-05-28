@@ -3,7 +3,7 @@
   <hr>
   <form class="form-inline">
     <div class="form-group">
-      <input class="form-control" name="keyword" type="search" [(ngModel)]="condition.keyword" placeholder="输入订单编号/手机号/姓名">
+      <input class="form-control" name="keyword" type="search" [(ngModel)]="condition.keyword" placeholder="输入手机号/姓名">
     </div>
     <div class="form-group">
       <label for="begin">开始日期</label>
@@ -36,9 +36,11 @@
         </td>
         <td>{{order.createTime | date }}</td>
         <td>{{order.state | orderstate}}</td>
-        <td><i class="glyphicon glyphicon-trash" role="button" (click)="onRemoveOrder(order)"></i>
-          <i class="glyphicon glyphicon-remove operator" data-target="#cancelReason" data-toggle="modal" role="button" (click)="onCancelOrder(order)" *ngIf="order.state==0"></i>
-          <i class="glyphicon glyphicon-ok" role="button" (click)="onComplete(order)" *ngIf="order.state==0||order.state==1"></i>
+        <td>
+          <i class="glyphicon glyphicon-send" role="button" (click)="onSend(order)" *ngIf="order.state==0"></i>
+          <i class="glyphicon glyphicon-remove operator" data-target="#cancelReason" data-toggle="modal" role="button" (click)="onCancelOrder(order)" *ngIf="order.state==0||order.state==1"></i>
+          <i class="glyphicon glyphicon-ok operator" role="button" (click)="onComplete(order)" *ngIf="order.state==0||order.state==1"></i>
+          <i class="glyphicon glyphicon-trash operator" role="button" (click)="onRemoveOrder(order)"></i>
         </td>
       </tr>
     </tbody>
@@ -54,7 +56,7 @@
       </form>
     </div>
   </div>
-  <ul class="pagination bottom" *ngIf="pages.length>0">
+  <ul class="pagination pagerbottom" *ngIf="pages.length>0">
     <li [class.disabled]="index<=1"><a href="#" (click)="onPrev()">&laquo;</a></li>
     <li *ngFor="let page of pages" [class.active]="page==index"><a href="#" (click)="onPageClick(page)">{{page}}</a></li>
     <li [class.disabled]="index*20>=count"><a href="#" (click)="onNext()">&raquo;</a></li>

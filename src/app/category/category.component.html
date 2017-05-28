@@ -13,8 +13,8 @@
         <td>{{category.name}}</td>
         <td>{{category.iconPath}}</td>
         <td>
-          <i class="glyphicon glyphicon-edit operator"></i>
-          <i class="glyphicon glyphicon-remove"></i>
+          <i class="glyphicon glyphicon-edit operator" role="button" (click)="onEdit(category)"></i>
+          <i class="glyphicon glyphicon-remove" role="button" (click)="onRemove(category)"></i>
         </td>
       </tr>
     </tbody>
@@ -30,7 +30,7 @@
     </div>
     <div class="form-group">
       <div *ngIf="currCategory.iconPath">
-        <img src="currCategory.iconPath" alt="" class="uploadPic">
+        <img src="{{currCategory.iconPath}}" alt="" class="uploadPic">
         <button class="btn btn-danger btn-xs" (click)="onPicRemove()">删除</button>
       </div>
       <div *ngFor="let item of uploader.queue">
@@ -41,6 +41,7 @@
           <button class="btn btn-xs btn-danger" (click)="item.remove()"><i class="glyphicon glyphicon-trash"></i>删除</button>
       </div>
     </div>
-    <button class="btn btn-primary" (click)="onSubmit()">添加</button>
+    <button class="btn btn-primary" (click)="onSubmit()" *ngIf="!currCategory.id">添加</button>
+    <button class="btn btn-primary" (click)="onUpdate()" *ngIf="currCategory.id">更新</button>
   </form>
 </div>

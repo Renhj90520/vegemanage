@@ -1,45 +1,45 @@
 <div id="page-wrapper">
   <form>
     <fieldset>
-      <input type="hidden" name="id" [(ngModel)]="newProduct.id">
+      <input name="id" type="hidden" [(ngModel)]="newProduct.id">
       <div class="form-group">
         <div class="col-sm-8 nopadding">
           <label for="prodName">名称</label>
-          <input type="text" class="form-control" id="prodName" [(ngModel)]="newProduct.name" name="prodName">
+          <input class="form-control" id="prodName" name="prodName" type="text" [(ngModel)]="newProduct.name">
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-8 nopadding">
           <label for="count">数量</label>
-          <input type="number" class="form-control" id="count" name="count" [(ngModel)]="newProduct.totalCount">
+          <input class="form-control" id="count" name="count" type="number" [(ngModel)]="newProduct.totalCount">
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-8 nopadding">
           <label for="unit">单位</label>
-          <select name="unit" id="unit" class="form-control" (change)="onUnitChange()" [(ngModel)]="newProduct.unitId">
-            <option value="{{unit.id}}" *ngFor="let unit of units">{{unit.name}}</option>
+          <select class="form-control" id="unit" name="unit" (ngModelChange)="onUnitChange($event)" [ngModel]="newProduct.unitId">
+            <option [value]="unit.id" *ngFor="let unit of units">{{unit.name}}</option>
           </select>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-8 nopadding">
           <label for="category">分类</label>
-          <select name="category" id="category" class="form-control" [(ngModel)]="newProduct.category">
-        <option value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</option>
-      </select>
+          <select class="form-control" id="category" name="category" (ngModelChange)="onCateChange($event)" [ngModel]="newProduct.categoryId">
+            <option [value]="category.id" *ngFor="let category of categories">{{category.name}}</option>
+          </select>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-8 nopadding">
           <label for="price">价格</label>
-          <input type="number" class="form-control" id="price" name="price" [(ngModel)]="newProduct.price">
+          <input class="form-control" id="price" name="price" type="number" [(ngModel)]="newProduct.price">
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-8 nopadding">
           <label for="description">描述</label>
-          <input type="textarea" class="form-control" id="description" name="description" rows="3" [(ngModel)]="newProduct.description">
+          <input class="form-control" id="description" name="description" type="textarea" rows="3" [(ngModel)]="newProduct.description">
         </div>
       </div>
       <div class="form-group">
@@ -51,7 +51,7 @@
     </fieldset>
     <div class="pictures row">
       <div class="col-sm-4" *ngFor="let pic of newProduct.pictures;let ii of index">
-        <img src="{{pic.path}}" class="uploadPic">
+        <img class="uploadPic" src="{{pic.path}}">
         <button class="btn btn-danger btn-xs" (click)="onPicedRemove(pic)">删除</button>
       </div>
       <div class="col-sm-4" *ngFor="let item of uploader.queue;let i of index">

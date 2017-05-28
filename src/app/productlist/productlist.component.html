@@ -40,7 +40,7 @@
     </tbody>
   </table>
 
-  <ul class="pagination bottom" *ngIf="pages.length>0">
+  <ul class="pagination pagerbottom" *ngIf="pages.length>0">
     <li [class.disabled]="index<=1"><a href="#" (click)="onPrev()">&laquo;</a></li>
     <li *ngFor="let page of pages" [class.active]="page==index"><a href="#" (click)="onPageClick(page)">{{page}}</a></li>
     <li [class.disabled]="index*20>=count"><a (click)="onNext()">&raquo;</a></li>

@@ -128,4 +128,21 @@ export class OrderlistComponent implements OnInit {
       err => alert(err));
   }
 
+  onSend(order) {
+    let pathDoc = [];
+    let stateOp: PatchDoc = new PatchDoc();
+    stateOp.path = "/state";
+    stateOp.value = "1";
+    pathDoc.push(stateOp);
+    this.orderService.updateOrder(order.id, pathDoc)
+      .subscribe(res => {
+        if (res.state == 1) {
+          order.state = 1;
+        } else {
+          alert(res.message);
+        }
+      }, err => {
+        alert(err);
+      });
+  }
 }

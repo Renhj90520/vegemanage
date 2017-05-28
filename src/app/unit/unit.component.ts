@@ -19,18 +19,15 @@ export class UnitComponent implements OnInit {
       this.units = res.body;
     },
       err => {
-        if (err) {
-          console.log(JSON.stringify(err));
-        }
+        alert(err)
       });
-
   }
 
   onAddUnit() {
     this.unitService.addUnit(this.currUnit)
       .subscribe(res => {
         if (res.state == 1) {
-          this.units.splice(0, 0, this.currUnit);
+          this.units.splice(0, 0, res.body);
           this.currUnit = new Unit();
         } else {
           alert('添加失败' + res.message);

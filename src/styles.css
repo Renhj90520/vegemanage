@@ -78,6 +78,11 @@ h3{
     bottom: 30px;
     margin-top: 20px;
 }
+.pagerbottom{
+    position: relative;
+    bottom: 30px;
+    margin-top: 20px;
+}
 .right{
   float: right;
   margin-right: 10px;
