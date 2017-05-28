@@ -31,7 +31,7 @@
         <td>{{order.id}}</td>
         <td>
           <p *ngFor="let product of order.products">
-            {{product.name}} &nbsp; X &nbsp;{{product.count}} 小计：￥{{product.price*product.count}}
+            {{product.name}} &nbsp; X &nbsp;{{product.count}} {{product.unitName}} 小计：￥{{product.price*product.count}}
           </p>
         </td>
         <td>{{order.createTime | date }}</td>
