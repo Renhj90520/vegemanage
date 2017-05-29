@@ -28,4 +28,9 @@ export class CategoryService {
         return this.http.delete(baseUrl + 'categories/' + id + '/pictures/' + path)
             .map(res => res.json());
     }
+
+    updateCate(cate) {
+        return this.http.put(baseUrl + 'categories/', cate)
+            .map(res => res.json());
+    }
 }

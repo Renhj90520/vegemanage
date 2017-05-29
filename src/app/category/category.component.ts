@@ -95,4 +95,15 @@ export class CategoryComponent implements OnInit {
         }, err => alert(err));
     }
   }
+  onUpdate() {
+    this.categoryService.updateCate(this.currCategory)
+      .subscribe(res => {
+        if (res.state == 1) {
+          this.currCategory=new Category();
+          alert("修改成功");
+        } else {
+          alert(res.message);
+        }
+      }, err => alert(err));
+  }
 }
