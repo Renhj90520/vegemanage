@@ -6,6 +6,7 @@ import { Product } from '../models/product';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 import { baseUrl } from '../shared/settings';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-product',
@@ -30,20 +31,6 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.uploader.onAfterAddingFile = (file) => {
-      file.withCredentials = false;
-    }
-    this.unitService.getAllUnits()
-      .subscribe(res => {
-        this.units = res.body;
-        let unit = this.units[0];
-        this.newProduct.unitName = unit.name;
-        this.newProduct.step = unit.step;
-      });
-    this.categoryService.getAllCategories()
-      .subscribe(res => {
-        this.categories = res.body;
-      });
     let id;
     this.route.params.forEach((params: Params) => {
       id = +params['id'];
@@ -58,6 +45,28 @@ export class ProductComponent implements OnInit {
           alert(err);
         })
     }
+    this.uploader.onAfterAddingFile = (file) => {
+      file.withCredentials = false;
+    }
+    this.unitService.getAllUnits()
+      .subscribe(res => {
+        this.units = res.body;
+        let unit = this.units[0];
+        this.newProduct.unitName = unit.name;
+        this.newProduct.step = unit.step;
+
+        if (!id) {
+          this.newProduct.unitId = this.units[0].id;
+        }
+      });
+    this.categoryService.getAllCategories()
+      .subscribe(res => {
+        this.categories = res.body;
+        if (!id) {
+          this.newProduct.categoryId = this.categories[0].id;
+        }
+      });
+
   }
 
   onUnitChange(newValue) {
@@ -66,26 +75,28 @@ export class ProductComponent implements OnInit {
     this.newProduct.step = unit.step;
   }
 
-  onSubmit() {
-    if (this.newProduct.id) {
-      this.productService.updateProducts(this.newProduct.id, this.newProduct)
-        .subscribe(res => {
-          if (res.state == 1) {
-            alert("修改成功");
+  onSubmit(form: NgForm) {
+    if (form.valid) {
+      if (this.newProduct.id) {
+        this.productService.updateProducts(this.newProduct.id, this.newProduct)
+          .subscribe(res => {
+            if (res.state == 1) {
+              alert("修改成功");
+              this.newProduct = new Product();
+            } else {
+              alert("修改失败：" + res.message);
+            }
+          }, err => {
+            alert(err);
+          })
+      } else {
+        this.productService.addProduct(this.newProduct)
+          .subscribe(res => {
+            alert("添加成功");
             this.newProduct = new Product();
-          } else {
-            alert("修改失败：" + res.message);
-          }
-        }, err => {
-          alert(err);
-        })
-    } else {
-      this.productService.addProduct(this.newProduct)
-        .subscribe(res => {
-          alert("添加成功");
-          this.newProduct = new Product();
-        });
-    }
+          });
+      }
+    } 
   }
   selectFileChanged() {
     let length = this.uploader.queue.length;

@@ -35,6 +35,10 @@ export class ProductService {
             conditions.push('name=' + condition.name);
         }
 
+        if (id) {
+            url += '/' + id;
+        }
+
         if (condition && conditions.length > 0) {
             url += '?' + conditions.join('&');
         }

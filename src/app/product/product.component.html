@@ -1,45 +1,51 @@
 <div id="page-wrapper">
-  <form>
+  <form #productForm="ngForm">
     <fieldset>
       <input name="id" type="hidden" [(ngModel)]="newProduct.id">
       <div class="form-group">
         <div class="col-sm-8 nopadding">
           <label for="prodName">名称</label>
-          <input class="form-control" id="prodName" name="prodName" type="text" [(ngModel)]="newProduct.name">
+          <input class="form-control" id="prodName" name="prodName" type="text" required #name="ngModel" [(ngModel)]="newProduct.name">
+          <p class="error" *ngIf="name.touched&&!name.valid">请输入商品名称！</p>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-8 nopadding">
           <label for="count">数量</label>
-          <input class="form-control" id="count" name="count" type="number" [(ngModel)]="newProduct.totalCount">
+          <input class="form-control" id="count" name="count" type="number" required #prodCount="ngModel" [(ngModel)]="newProduct.totalCount">
+          <p class="error" *ngIf="prodCount.touched&&!prodCount.valid">请输入数量！</p>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-8 nopadding">
           <label for="unit">单位</label>
-          <select class="form-control" id="unit" name="unit" (ngModelChange)="onUnitChange($event)" [ngModel]="newProduct.unitId">
+          <select class="form-control" id="unit" name="unit" required #prodUnit="ngModel" (ngModelChange)="onUnitChange($event)" [ngModel]="newProduct.unitId">
             <option [value]="unit.id" *ngFor="let unit of units">{{unit.name}}</option>
           </select>
+          <p class="error" *ngIf="prodUnit.touched&&!prodUnit.valid">请选择商品单位！</p>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-8 nopadding">
           <label for="category">分类</label>
-          <select class="form-control" id="category" name="category" (ngModelChange)="onCateChange($event)" [ngModel]="newProduct.categoryId">
+          <select class="form-control" id="category" name="category" required #prodCate="ngModel" (ngModelChange)="onCateChange($event)" [ngModel]="newProduct.categoryId">
             <option [value]="category.id" *ngFor="let category of categories">{{category.name}}</option>
           </select>
+          <p class="error" *ngIf="prodCate.touched&&!prodCate.valid">请选择商品分类！</p>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-8 nopadding">
           <label for="price">价格</label>
-          <input class="form-control" id="price" name="price" type="number" [(ngModel)]="newProduct.price">
+          <input class="form-control" id="price" name="price" type="number" required #prodPrice="ngModel" [(ngModel)]="newProduct.price">
+          <p class="error" *ngIf="prodPrice.touched&&!prodPrice.valid">请输入价格！</p>
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-8 nopadding">
           <label for="description">描述</label>
-          <input class="form-control" id="description" name="description" type="textarea" rows="3" [(ngModel)]="newProduct.description">
+          <input class="form-control" id="description" name="description" type="textarea" required #prodDesc="ngModel" rows="3" [(ngModel)]="newProduct.description">
+          <p class="error" *ngIf="prodDesc.touched&&!prodDesc.valid">请输入描述！</p>
         </div>
       </div>
       <div class="form-group">
@@ -62,6 +68,6 @@
         <button class="btn btn-xs btn-danger" (click)="onPicRemove(i)"><i class="glyphicon glyphicon-trash"></i>删除</button>
       </div>
     </div>
-    <button class="btn btn-primary" style="margin-top:10px;" (click)="onSubmit()">提交</button>
+    <button class="btn btn-primary" style="margin-top:10px;" [disabled]="!productForm.valid" (click)="onSubmit(productForm)">提交</button>
   </form>
 </div>

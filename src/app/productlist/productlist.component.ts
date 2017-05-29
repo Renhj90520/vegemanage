@@ -24,7 +24,7 @@ export class ProductlistComponent implements OnInit {
   }
 
   doLoading(index: number, condition: any) {
-    this.productService.getProducts(index, condition)
+    this.productService.getProducts(null, index, 20, condition)
       .subscribe(res => {
         this.count = res.body.count;
         this.products = res.body.items;
@@ -55,6 +55,7 @@ export class ProductlistComponent implements OnInit {
   }
 
   onEdit(product) {
+
     this.router.navigate(['productlist/' + product.id], { replaceUrl: true });
   }
   onDelete(product) {

@@ -105,3 +105,8 @@ h3{
     width: 80px;
     height: 80px;
 }
+
+.error{
+  font-weight: bold;
+  color: red;
+}
