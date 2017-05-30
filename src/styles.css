@@ -73,11 +73,22 @@ h3{
   }
 }
 
-.bottom{
-    position: absolute;
+@media only screen and (max-width:500px){
+  .bottom{
+    position: relative;
     bottom: 30px;
-    margin-top: 20px;
+    margin-top: 50px;
+  }
 }
+
+@media only screen and (min-width:500px){
+  .bottom{
+      position: absolute;
+      bottom: 30px;
+      margin-top: 20px;
+  }
+}
+
 .pagerbottom{
     position: relative;
     bottom: 30px;
