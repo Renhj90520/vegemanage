@@ -16,6 +16,6 @@ export class MyDatePipe implements PipeTransform {
         // } else {
         //     return '';
         // }
-        return now.replace('T',' ')
+        return now.replace('T', ' ').substring(0, 19);
     }
 }
