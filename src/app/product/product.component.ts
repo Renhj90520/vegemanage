@@ -52,6 +52,7 @@ export class ProductComponent implements OnInit {
       .subscribe(res => {
         this.units = res.body;
         let unit = this.units[0];
+        this.newProduct.unitId = unit.id;
         this.newProduct.unitName = unit.name;
         this.newProduct.step = unit.step;
 
@@ -71,6 +72,7 @@ export class ProductComponent implements OnInit {
 
   onUnitChange(newValue) {
     let unit = this.units.filter(u => u.id == newValue)[0];
+    this.newProduct.unitId = unit.id;
     this.newProduct.unitName = unit.name;
     this.newProduct.step = unit.step;
   }
@@ -96,7 +98,7 @@ export class ProductComponent implements OnInit {
             this.newProduct = new Product();
           });
       }
-    } 
+    }
   }
   selectFileChanged() {
     let length = this.uploader.queue.length;

@@ -35,6 +35,9 @@ export class OrderlistComponent implements OnInit {
         if (res.state == 1) {
           this.count = res.body.count;
           this.orders = res.body.items;
+          this.orders.forEach(order => {
+            order.total = order.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+          })
           let pager = this.pagerService.getPager(this.count, this.index);
           this.pages = pager.pages;
         } else {
@@ -46,6 +49,8 @@ export class OrderlistComponent implements OnInit {
   }
 
   onPrev() {
+    if (this.index <= 1)
+      return;
     this.index--;
     this.doLoading(this.index, this.condition);
   }
@@ -56,6 +61,8 @@ export class OrderlistComponent implements OnInit {
   }
 
   onNext() {
+    if (this.index * 20 >= this.count)
+      return;
     this.index++;
     this.doLoading(this.index, this.condition);
   }

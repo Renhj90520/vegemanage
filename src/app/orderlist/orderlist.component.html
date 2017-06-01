@@ -33,8 +33,12 @@
           <p *ngFor="let product of order.products">
             {{product.name}} &nbsp; X &nbsp;{{product.count}} {{product.unitName}} 小计：￥{{product.price*product.count}}
           </p>
+          <p class="red">总计：￥{{order.total}}</p>
+          <p><i class="glyphicon glyphicon-map-marker blue"></i> {{order.street}}</p>
+          <p><i class="glyphicon glyphicon-user blue"></i>{{order.name}}</p>
+          <p><i class="glyphicon glyphicon-phone blue"></i>{{order.phone}}</p>
         </td>
-        <td>{{order.createTime | date }}</td>
+        <td>{{order.createTime | mydate }}</td>
         <td>{{order.state | orderstate}}</td>
         <td>
           <i class="glyphicon glyphicon-send" role="button" (click)="onSend(order)" *ngIf="order.state==0"></i>
@@ -57,8 +61,8 @@
     </div>
   </div>
   <ul class="pagination pagerbottom" *ngIf="pages.length>0">
-    <li [class.disabled]="index<=1"><a href="#" (click)="onPrev()">&laquo;</a></li>
-    <li *ngFor="let page of pages" [class.active]="page==index"><a href="#" (click)="onPageClick(page)">{{page}}</a></li>
-    <li [class.disabled]="index*20>=count"><a href="#" (click)="onNext()">&raquo;</a></li>
+    <li [class.disabled]="index<=1"><a (click)="onPrev()">&laquo;</a></li>
+    <li *ngFor="let page of pages" [class.active]="page==index"><a (click)="onPageClick(page)">{{page}}</a></li>
+    <li [class.disabled]="index*20>=count"><a (click)="onNext()">&raquo;</a></li>
   </ul>
 </div>

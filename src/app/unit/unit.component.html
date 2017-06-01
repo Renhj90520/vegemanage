@@ -23,16 +23,16 @@
   </div>
   <div class="bottom">
     <form class="form-inline">
-      <input type="hidden" [(ngModel)]="currUnit.id" name="currId">
       <div class="form-group">
         <label for="unitname">名称</label>
         <input class="form-control" id="unitname" name="unitname" [(ngModel)]="currUnit.name" type="text">
       </div>
       <div class="form-group">
         <label for="unitstep">增长数量</label>
-        <input class="form-control" id="unitstep" name="unitstep" [(ngModel)]="currUnit.step" type="number">
+        <input class="form-control" id="unitstep" name="unitstep" step="0.1" [(ngModel)]="currUnit.step" type="number">
       </div>
-      <button class="btn btn-primary" type="submit" (click)="onAddUnit()">添加</button>
+      <button class="btn btn-primary" type="submit" (click)="onAddUnit()" *ngIf="!currUnit.id">添加</button>
+      <button class="btn btn-primary" type="submit" (click)="onAddUnit()" *ngIf="currUnit.id">更新</button>
     </form>
   </div>
 

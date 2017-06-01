@@ -22,4 +22,9 @@ export class UnitService {
         return this.http.delete(baseUrl + 'units/' + id)
             .map(res => res.json());
     }
+
+    updateUnit(unit: Unit) {
+        return this.http.put(baseUrl + 'units', unit)
+            .map(res => res.json());
+    }
 }

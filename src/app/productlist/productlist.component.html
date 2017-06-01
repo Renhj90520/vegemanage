@@ -5,11 +5,11 @@
     <form class="form-inline">
       <div class="form-group">
         <label for="pname">名称:</label>
-        <input type="text" id="pname" name="pname" [(ngModel)]="condition.name" class="form-control">
+        <input class="form-control" id="pname" name="pname" type="text" [(ngModel)]="condition.name">
       </div>
       <div class="form-group">
         <label for="pcategroy">分类：</label>
-        <select class="form-control" name="category" [(ngModel)]="condition.category" id="pcategory">
+        <select class="form-control" id="pcategory" name="category" [(ngModel)]="condition.category">
           <option value="0">请选择分类</option>
           <option value="category.id" *ngFor="let category of categories">{{category.name}}</option>
         </select>
@@ -41,8 +41,8 @@
   </table>
 
   <ul class="pagination pagerbottom" *ngIf="pages.length>0">
-    <li [class.disabled]="index<=1"><a href="#" (click)="onPrev()">&laquo;</a></li>
-    <li *ngFor="let page of pages" [class.active]="page==index"><a href="#" (click)="onPageClick(page)">{{page}}</a></li>
+    <li [class.disabled]="index<=1"><a (click)="onPrev()">&laquo;</a></li>
+    <li *ngFor="let page of pages" [class.active]="page==index"><a (click)="onPageClick(page)">{{page}}</a></li>
     <li [class.disabled]="index*20>=count"><a (click)="onNext()">&raquo;</a></li>
   </ul>
 </div>

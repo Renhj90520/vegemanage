@@ -38,6 +38,8 @@ export class ProductlistComponent implements OnInit {
   }
 
   onPrev() {
+    if (this.index <= 1)
+      return;
     this.index--;
     this.doLoading(this.index, this.condition);
   }
@@ -46,6 +48,8 @@ export class ProductlistComponent implements OnInit {
     this.doLoading(this.index, this.condition);
   }
   onNext() {
+    if (this.index * 20 >= this.count)
+      return
     this.index++;
     this.doLoading(this.index, this.condition);
   }
