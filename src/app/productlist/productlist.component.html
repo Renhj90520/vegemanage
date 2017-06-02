@@ -10,11 +10,11 @@
       <div class="form-group">
         <label for="pcategroy">分类：</label>
         <select class="form-control" id="pcategory" name="category" [(ngModel)]="condition.category">
-          <option value="0">请选择分类</option>
-          <option value="category.id" *ngFor="let category of categories">{{category.name}}</option>
+          <option value="{{category.id}}" *ngFor="let category of categories">{{category.name}}</option>
         </select>
       </div>
       <button class="btn btn-primary btn-sm" (click)="onSearch()"><i class="glyphicon glyphicon-search"></i></button>
+      <button class="btn btn-primary btn-sm" (click)="onClear()">清除</button>
       <button class="btn btn-primary right" (click)="onAddProduct()">添加商品</button>
     </form>
   </div>

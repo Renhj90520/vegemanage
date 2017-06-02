@@ -1,10 +1,12 @@
-///<reference path="../../../typings/globals/jquery/index.d.ts" />
+/////<reference path="../../../typings/globals/jquery/index.d.ts" />
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
 
 import { PagerService } from '../shared/pager.service';
 import { PatchDoc } from '../models/patchdoc';
-declare var $: JQueryStatic;
+import { MathUtil } from '../shared/util';
+
+// declare var $: JQueryStatic;
 @Component({
   selector: 'app-orderlist',
   templateUrl: './orderlist.component.html',
@@ -36,7 +38,10 @@ export class OrderlistComponent implements OnInit {
           this.count = res.body.count;
           this.orders = res.body.items;
           this.orders.forEach(order => {
-            order.total = order.products.map(p => p.price * p.count).reduce((x, y) => x + y);
+            order.total = order.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
+            order.products.forEach(p => {
+              p.cost = MathUtil.mutiple(p.count, p.price);
+            });
           })
           let pager = this.pagerService.getPager(this.count, this.index);
           this.pages = pager.pages;

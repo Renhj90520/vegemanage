@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { PagerService } from '../shared/pager.service';
 import { ProductService } from '../product/product.service';
 import { Router } from '@angular/router';
+import { CategoryService } from '../category/category.service';
 
 @Component({
   selector: 'app-productlist',
   templateUrl: './productlist.component.html',
   styleUrls: ['./productlist.component.css'],
-  providers: [PagerService, ProductService]
+  providers: [PagerService, ProductService, CategoryService]
 })
 export class ProductlistComponent implements OnInit {
   products: any[];
@@ -15,11 +16,22 @@ export class ProductlistComponent implements OnInit {
   index: number = 1;
   condition: any = {};
   pages: any[] = [];
+  categories: any[] = [];
 
   units: any[] = [];
-  constructor(private productService: ProductService, private pagerService: PagerService, private router: Router) { }
+  constructor(private productService: ProductService, private categoryService: CategoryService, private pagerService: PagerService, private router: Router) { }
 
   ngOnInit() {
+    this.categoryService.getAllCategories()
+      .subscribe(res => {
+        if (res.state == 1) {
+          this.categories = res.body;
+        } else {
+          alert(res.message);
+        }
+      }, err => {
+        alert(err);
+      })
     this.doLoading(this.index, this.condition);
   }
 
@@ -67,5 +79,9 @@ export class ProductlistComponent implements OnInit {
       .subscribe(res => {
         console.log(JSON.stringify(res));
       });
+  }
+  onClear() {
+    this.condition = {};
+    this.onSearch();
   }
 }
