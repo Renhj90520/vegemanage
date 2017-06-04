@@ -38,7 +38,8 @@ export class OrderlistComponent implements OnInit {
           this.count = res.body.count;
           this.orders = res.body.items;
           this.orders.forEach(order => {
-            order.total = order.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
+            let total = order.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
+            order.total = MathUtil.add(total, order.deliveryCharge);
             order.products.forEach(p => {
               p.cost = MathUtil.mutiple(p.count, p.price);
             });

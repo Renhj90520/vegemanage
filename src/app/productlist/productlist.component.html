@@ -25,6 +25,7 @@
         <th>名称</th>
         <th>价格</th>
         <th>单位</th>
+        <th>分类</th>
         <th>操作</th>
       </tr>
     </thead>
@@ -33,6 +34,7 @@
         <td>{{product.name}}</td>
         <td>{{product.price}}</td>
         <td>{{product.unitName}}</td>
+        <td>{{product.categoryName}}</td>
         <td>
           <i class="glyphicon glyphicon-edit operator" (click)="onEdit(product)"></i>
           <i class="glyphicon glyphicon-trash operator" (click)="onDelete(product)"></i></td>

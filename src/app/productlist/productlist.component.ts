@@ -77,7 +77,13 @@ export class ProductlistComponent implements OnInit {
   onDelete(product) {
     this.productService.unshelveProduct(product.id)
       .subscribe(res => {
-        console.log(JSON.stringify(res));
+        if (res.state == 1) {
+          this.products.splice(this.products.indexOf(product), 1);
+        } else {
+          alert(res.message);
+        }
+      }, err => {
+        alert(err);
       });
   }
   onClear() {

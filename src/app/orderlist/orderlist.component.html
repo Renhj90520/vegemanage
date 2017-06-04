@@ -33,7 +33,7 @@
           <p *ngFor="let product of order.products">
             {{product.name}} <span class="red">￥{{product.price}}</span> &nbsp; X &nbsp;{{product.count}} {{product.unitName}} 小计：<span class="red">￥{{product.cost}}</span>
           </p>
-          <p class="red">总计：￥{{order.total}}</p>
+          <p class="red">总计：￥{{order.total}} <span *ngIf="order.deliveryCharge>0">含￥5运费</span></p>
           <p><i class="glyphicon glyphicon-map-marker blue"></i> {{order.street}}</p>
           <p><i class="glyphicon glyphicon-user blue"></i>{{order.name}}</p>
           <p><i class="glyphicon glyphicon-phone blue"></i>{{order.phone}}</p>
