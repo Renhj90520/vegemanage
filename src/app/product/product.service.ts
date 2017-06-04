@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { baseUrl } from '../shared/settings';
 import 'rxjs/add/operator/map';
-import { PatchDoc } from '../models/patchDoc';
 
 @Injectable()
 export class ProductService {
@@ -13,12 +12,8 @@ export class ProductService {
             .map(res => res.json());
     }
 
-    unshelveProduct(id: number) {
-        var patchDoc = [];
-        let stateOp: PatchDoc = new PatchDoc();
-        stateOp.path = '/state';
-        stateOp.value = "0";
-        patchDoc.push(stateOp);
+    patchProduct(id: number, patchDoc: any[]) {
+
         return this.http.patch(baseUrl + 'products/' + id, patchDoc)
             .map(res => res.json());
     }
