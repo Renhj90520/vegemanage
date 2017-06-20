@@ -1,12 +1,12 @@
 export class Product {
-    id: number;
-    name: string;
-    totalCount: number;
-    unitId: number;
-    unitName: string;
-    step: number;
-    price: number;
-    description: string;
-    categoryId: number;
-    pictures: any[] = [];
+    Id: number;
+    Name: string;
+    TotalCount: number;
+    UnitId: number;
+    UnitName: string;
+    Step: number;
+    Price: number;
+    Description: string;
+    CategoryId: number;
+    Pictures: any[] = [];
 }

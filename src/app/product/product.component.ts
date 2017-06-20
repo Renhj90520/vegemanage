@@ -52,19 +52,19 @@ export class ProductComponent implements OnInit {
       .subscribe(res => {
         this.units = res.body;
         let unit = this.units[0];
-        this.newProduct.unitId = unit.id;
-        this.newProduct.unitName = unit.name;
-        this.newProduct.step = unit.step;
+        this.newProduct.UnitId = unit.id;
+        this.newProduct.UnitName = unit.name;
+        this.newProduct.Step = unit.step;
 
         if (!id) {
-          this.newProduct.unitId = this.units[0].id;
+          this.newProduct.UnitId = this.units[0].id;
         }
       });
     this.categoryService.getAllCategories()
       .subscribe(res => {
         this.categories = res.body;
         if (!id) {
-          this.newProduct.categoryId = this.categories[0].id;
+          this.newProduct.CategoryId = this.categories[0].id;
         }
       });
 
@@ -72,15 +72,15 @@ export class ProductComponent implements OnInit {
 
   onUnitChange(newValue) {
     let unit = this.units.filter(u => u.id == newValue)[0];
-    this.newProduct.unitId = unit.id;
-    this.newProduct.unitName = unit.name;
-    this.newProduct.step = unit.step;
+    this.newProduct.UnitId = unit.id;
+    this.newProduct.UnitName = unit.name;
+    this.newProduct.Step = unit.step;
   }
 
   onSubmit(form: NgForm) {
     if (form.valid) {
-      if (this.newProduct.id) {
-        this.productService.updateProducts(this.newProduct.id, this.newProduct)
+      if (this.newProduct.Id) {
+        this.productService.updateProducts(this.newProduct.Id, this.newProduct)
           .subscribe(res => {
             if (res.state == 1) {
               alert("修改成功");
@@ -108,7 +108,7 @@ export class ProductComponent implements OnInit {
         if (status == 200) {
           let ppp = pic;
           let result = JSON.parse(res);
-          this.newProduct.pictures.push(result.body);
+          this.newProduct.Pictures.push(result.body);
           ppp.remove();
         } else {
         }
@@ -128,12 +128,12 @@ export class ProductComponent implements OnInit {
     this.productService.removePic(fileName)
       .subscribe(res => {
         if (res.state == 1) {
-          this.newProduct.pictures.splice(this.newProduct.pictures.indexOf(pic), 1);
+          this.newProduct.Pictures.splice(this.newProduct.Pictures.indexOf(pic), 1);
         }
       })
   }
   onCateChange(newCate) {
-    this.newProduct.categoryId = newCate;
+    this.newProduct.CategoryId = newCate;
   }
 
 }

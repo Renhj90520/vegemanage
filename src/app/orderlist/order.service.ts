@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '../shared/httpclient';
 import { baseUrl } from '../shared/settings';
 import 'rxjs/add/operator/map';
 
@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 export class OrderService {
     perPage: number = 20;
 
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
     getOrders(index: number, condition) {
         var url = baseUrl + 'orders?';
@@ -25,6 +25,7 @@ export class OrderService {
         if (condition.noshowRemove) {
             url += '&noshowRemove=true'
         }
+
         return this.http.get(url)
             .map(res => res.json());
     }

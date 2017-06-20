@@ -10,8 +10,8 @@
     </thead>
     <tbody>
       <tr *ngFor="let category of categories">
-        <td>{{category.name}}</td>
-        <td>{{category.iconPath}}</td>
+        <td>{{category.Name}}</td>
+        <td>{{category.IconPath}}</td>
         <td>
           <i class="glyphicon glyphicon-edit operator" role="button" (click)="onEdit(category)"></i>
           <i class="glyphicon glyphicon-remove" role="button" (click)="onRemove(category)"></i>
@@ -22,15 +22,15 @@
   <form class="form-inline bottom">
     <div class="form-group">
       <label for="cateName">名称</label>
-      <input class="form-control" id="cateName" name="cateName" [(ngModel)]="currCategory.name" type="text">
+      <input class="form-control" id="cateName" name="cateName" [(ngModel)]="currCategory.Name" type="text">
     </div>
     <div class="form-group">
       <label for="upload">选择图标</label>
       <input type="file" ng2FileSelect [uploader]="uploader" (change)="selectFileOnChanged($event)">
     </div>
     <div class="form-group">
-      <div *ngIf="currCategory.iconPath">
-        <img src="{{currCategory.iconPath}}" alt="" class="uploadPic">
+      <div *ngIf="currCategory.IconPath">
+        <img src="{{currCategory.IconPath}}" alt="" class="uploadPic">
         <button class="btn btn-danger btn-xs" (click)="onPicRemove()">删除</button>
       </div>
       <div *ngFor="let item of uploader.queue">
@@ -41,7 +41,7 @@
           <button class="btn btn-xs btn-danger" (click)="item.remove()"><i class="glyphicon glyphicon-trash"></i>删除</button>
       </div>
     </div>
-    <button class="btn btn-primary" (click)="onSubmit()" *ngIf="!currCategory.id">添加</button>
-    <button class="btn btn-primary" (click)="onUpdate()" *ngIf="currCategory.id">更新</button>
+    <button class="btn btn-primary" (click)="onSubmit()" *ngIf="!currCategory.Id">添加</button>
+    <button class="btn btn-primary" (click)="onUpdate()" *ngIf="currCategory.Id">更新</button>
   </form>
 </div>

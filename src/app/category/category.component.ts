@@ -35,7 +35,7 @@ export class CategoryComponent implements OnInit {
   selectFileOnChanged() {
     this.uploader.queue[0].onSuccess = (res, status, headers) => {
       if (status == 200) {
-        this.currCategory.iconPath = JSON.parse(res).body.path;
+        this.currCategory.IconPath = JSON.parse(res).body.path;
         if (this.uploader.queue && this.uploader.queue.length > 0)
           this.uploader.queue[0].remove();
       } else {
@@ -57,10 +57,10 @@ export class CategoryComponent implements OnInit {
       })
   }
   onPicRemove() {
-    this.categoryService.removePic(this.currCategory.id, this.currCategory.iconPath.substring(this.currCategory.iconPath.lastIndexOf('/') + 1))
+    this.categoryService.removePic(this.currCategory.Id, this.currCategory.IconPath.substring(this.currCategory.IconPath.lastIndexOf('/') + 1))
       .subscribe(res => {
         if (res.state == 1) {
-          this.currCategory.iconPath = null;
+          this.currCategory.IconPath = null;
         } else {
           alert(res.message);
         }
@@ -70,8 +70,8 @@ export class CategoryComponent implements OnInit {
   }
 
   onEdit(category) {
-    if (this.currCategory && this.currCategory.iconPath) {
-      this.categoryService.removePic(0, this.currCategory.iconPath)
+    if (this.currCategory && this.currCategory.IconPath) {
+      this.categoryService.removePic(0, this.currCategory.IconPath)
         .subscribe(res => {
 
         });

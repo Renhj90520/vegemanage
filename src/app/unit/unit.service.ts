@@ -1,4 +1,4 @@
-import { Http } from '@angular/http';
+import { HttpClient } from '../shared/httpclient';
 import { baseUrl } from '../shared/settings';
 import { Injectable } from '@angular/core';
 import { Unit } from '../models/unit';
@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class UnitService {
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
     getAllUnits() {
         return this.http.get(baseUrl + 'units')

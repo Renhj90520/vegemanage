@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpClient } from '../shared/httpclient';
 import { baseUrl } from '../shared/settings';
 import { Category } from '../models/category';
 import 'rxjs/add/operator/map';
@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class CategoryService {
 
-    constructor(private http: Http) { }
+    constructor(private http: HttpClient) { }
 
     addCategory(category: Category) {
         return this.http.post(baseUrl + 'categories', category)
