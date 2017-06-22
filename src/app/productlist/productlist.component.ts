@@ -7,6 +7,7 @@ import { NgForm } from '@angular/forms';
 import { Product } from '../models/product';
 import { UnitService } from '../unit/unit.service';
 import { PatchDoc } from '../models/patchdoc';
+import { env } from '../shared/settings';
 
 @Component({
   selector: 'app-productlist',
@@ -53,10 +54,16 @@ export class ProductlistComponent implements OnInit {
   doLoading(index: number, condition: any) {
     this.productService.getProducts(null, index, 20, condition)
       .subscribe(res => {
-        this.count = res.body.count;
-        this.products = res.body.items;
-        let pager = this.pagerService.getPager(this.count, this.index);
-        this.pages = pager.pages;
+        if (res.state == 1) {
+          this.count = res.body.count;
+          this.products = res.body.items;
+          let pager = this.pagerService.getPager(this.count, this.index);
+          this.pages = pager.pages;
+        } else {
+          alert(res.message);
+        }
+      }, err => {
+        alert(err);
       });
   }
   onSearch() {
@@ -87,24 +94,37 @@ export class ProductlistComponent implements OnInit {
 
   onEdit(product) {
 
-    this.router.navigate(['productlist/' + product.id], { replaceUrl: true });
+    this.router.navigate(['productlist/' + product.Id], { replaceUrl: true });
   }
   onDelete(product) {
-    var patchDoc = [];
-    let stateOp: PatchDoc = new PatchDoc();
-    stateOp.path = '/state';
-    stateOp.value = "0";
-    patchDoc.push(stateOp);
-    this.productService.patchProduct(product.id, patchDoc)
-      .subscribe(res => {
-        if (res.state == 1) {
-          this.products.splice(this.products.indexOf(product), 1);
-        } else {
-          alert(res.message);
-        }
-      }, err => {
-        alert(err);
-      });
+    if (env === "node") {
+      this.productService.updateProducts(product.Id, { State: 0 })
+        .subscribe(res => {
+          if (res.state == 1) {
+            this.products.splice(this.products.indexOf(product), 1);
+          } else {
+            alert(res.message);
+          }
+        }, err => {
+          alert(err);
+        });
+    } else {
+      var patchDoc = [];
+      let stateOp: PatchDoc = new PatchDoc();
+      stateOp.path = '/state';
+      stateOp.value = "0";
+      patchDoc.push(stateOp);
+      this.productService.patchProduct(product.Id, patchDoc)
+        .subscribe(res => {
+          if (res.state == 1) {
+            this.products.splice(this.products.indexOf(product), 1);
+          } else {
+            alert(res.message);
+          }
+        }, err => {
+          alert(err);
+        });
+    }
   }
   onClear() {
     this.condition = {};
@@ -117,52 +137,66 @@ export class ProductlistComponent implements OnInit {
 
   onUnitChange(newValue) {
     let unit = this.units.filter(u => u.id == newValue)[0];
-    this.currProduct.unitId = unit.id;
-    this.currProduct.unitName = unit.name;
-    this.currProduct.step = unit.step;
+    this.currProduct.UnitId = unit.id;
+    this.currProduct.UnitName = unit.name;
+    this.currProduct.Step = unit.step;
   }
 
   onSubmit(form: NgForm) {
     if (form.valid) {
-      var patchDoc = [];
-      let priceOp: PatchDoc = new PatchDoc();
-      priceOp.path = '/price';
-      priceOp.value = this.currProduct.price;
-      patchDoc.push(priceOp);
-      let nameOp: PatchDoc = new PatchDoc();
-      nameOp.path = '/name';
-      nameOp.value = this.currProduct.name;
-      patchDoc.push(nameOp);
-      let unitIdOp = new PatchDoc();
-      unitIdOp.path = '/unitId';
-      unitIdOp.value = this.currProduct.unitId;
-      patchDoc.push(unitIdOp);
-      let unitNameOp = new PatchDoc();
-      unitNameOp.path = '/unitName';
-      unitNameOp.value = this.currProduct.unitName;
-      patchDoc.push(unitNameOp);
-      let stepOp = new PatchDoc();
-      stepOp.path = '/step';
-      stepOp.value=this.currProduct.step;
-      patchDoc.push(stepOp);
-      let categoryIdOp = new PatchDoc();
-      categoryIdOp.path = '/categoryId';
-      categoryIdOp.value = this.currProduct.categoryId;
-      patchDoc.push(categoryIdOp);
-      this.productService.patchProduct(this.currProduct.id, patchDoc)
-        .subscribe(res => {
-          if (res.state == 1) {
-            alert("修改成功");
-            this.currProduct = new Product();
-          } else {
-            alert("修改失败：" + res.message);
-          }
-        }, err => {
-          alert(err);
-        })
+      if (env === "node") {
+        this.productService.updateProducts(this.currProduct.Id, this.currProduct)
+          .subscribe(res => {
+            if (res.state == 1) {
+              alert("修改成功");
+              this.currProduct = new Product();
+            } else {
+              alert(res.message);
+            }
+          }, err => {
+            alert(err);
+          })
+      } else {
+        var patchDoc = [];
+        let priceOp: PatchDoc = new PatchDoc();
+        priceOp.path = '/price';
+        priceOp.value = this.currProduct.Price;
+        patchDoc.push(priceOp);
+        let nameOp: PatchDoc = new PatchDoc();
+        nameOp.path = '/name';
+        nameOp.value = this.currProduct.Name;
+        patchDoc.push(nameOp);
+        let unitIdOp = new PatchDoc();
+        unitIdOp.path = '/unitId';
+        unitIdOp.value = this.currProduct.UnitId;
+        patchDoc.push(unitIdOp);
+        let unitNameOp = new PatchDoc();
+        unitNameOp.path = '/unitName';
+        unitNameOp.value = this.currProduct.UnitName;
+        patchDoc.push(unitNameOp);
+        let stepOp = new PatchDoc();
+        stepOp.path = '/step';
+        stepOp.value = this.currProduct.Step;
+        patchDoc.push(stepOp);
+        let categoryIdOp = new PatchDoc();
+        categoryIdOp.path = '/categoryId';
+        categoryIdOp.value = this.currProduct.CategoryId;
+        patchDoc.push(categoryIdOp);
+        this.productService.patchProduct(this.currProduct.Id, patchDoc)
+          .subscribe(res => {
+            if (res.state == 1) {
+              alert("修改成功");
+              this.currProduct = new Product();
+            } else {
+              alert("修改失败：" + res.message);
+            }
+          }, err => {
+            alert(err);
+          })
+      }
     }
   }
   onCateChange(newCate) {
-    this.currProduct.categoryId = newCate;
+    this.currProduct.CategoryId = newCate;
   }
 }

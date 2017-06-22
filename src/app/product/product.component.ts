@@ -52,29 +52,29 @@ export class ProductComponent implements OnInit {
       .subscribe(res => {
         this.units = res.body;
         let unit = this.units[0];
-        this.newProduct.UnitId = unit.id;
-        this.newProduct.UnitName = unit.name;
-        this.newProduct.Step = unit.step;
+        this.newProduct.UnitId = unit.Id;
+        this.newProduct.UnitName = unit.Name;
+        this.newProduct.Step = unit.Step;
 
         if (!id) {
-          this.newProduct.UnitId = this.units[0].id;
+          this.newProduct.UnitId = this.units[0].Id;
         }
       });
     this.categoryService.getAllCategories()
       .subscribe(res => {
         this.categories = res.body;
         if (!id) {
-          this.newProduct.CategoryId = this.categories[0].id;
+          this.newProduct.CategoryId = this.categories[0].Id;
         }
       });
 
   }
 
   onUnitChange(newValue) {
-    let unit = this.units.filter(u => u.id == newValue)[0];
-    this.newProduct.UnitId = unit.id;
-    this.newProduct.UnitName = unit.name;
-    this.newProduct.Step = unit.step;
+    let unit = this.units.filter(u => u.Id == newValue)[0];
+    this.newProduct.UnitId = unit.Id;
+    this.newProduct.UnitName = unit.Name;
+    this.newProduct.Step = unit.Step;
   }
 
   onSubmit(form: NgForm) {
@@ -124,7 +124,7 @@ export class ProductComponent implements OnInit {
   }
 
   onPicedRemove(pic) {
-    let fileName = pic.path.substring(pic.path.lastIndexOf('/'));
+    let fileName = pic.Path.substring(pic.Path.lastIndexOf('/'));
     this.productService.removePic(fileName)
       .subscribe(res => {
         if (res.state == 1) {

@@ -38,10 +38,10 @@ export class OrderlistComponent implements OnInit {
           this.count = res.body.count;
           this.orders = res.body.items;
           this.orders.forEach(order => {
-            let total = order.products.map(p => MathUtil.mutiple(p.price, p.count)).reduce((x, y) => MathUtil.add(x, y));
-            order.total = MathUtil.add(total, order.deliveryCharge);
-            order.products.forEach(p => {
-              p.cost = MathUtil.mutiple(p.count, p.price);
+            let total = order.Products.map(p => MathUtil.mutiple(p.Price, p.Count)).reduce((x, y) => MathUtil.add(x, y));
+            order.total = MathUtil.add(total, order.DeliveryCharge);
+            order.Products.forEach(p => {
+              p.cost = MathUtil.mutiple(p.Count, p.Price);
             });
           })
           let pager = this.pagerService.getPager(this.count, this.index);

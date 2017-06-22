@@ -11,8 +11,8 @@
       </thead>
       <tbody>
         <tr *ngFor="let unit of units;let i = index">
-          <td>{{unit.name}}</td>
-          <td>{{unit.step}}</td>
+          <td>{{unit.Name}}</td>
+          <td>{{unit.Step}}</td>
           <td>
             <i class="glyphicon glyphicon-edit operator" (click)="onEdit(i)"></i>
             <i class="glyphicon glyphicon-remove operator" (click)="onRemove(i)"></i>
@@ -25,14 +25,14 @@
     <form class="form-inline">
       <div class="form-group">
         <label for="unitname">名称</label>
-        <input class="form-control" id="unitname" name="unitname" [(ngModel)]="currUnit.name" type="text">
+        <input class="form-control" id="unitname" name="unitname" [(ngModel)]="currUnit.Name" type="text">
       </div>
       <div class="form-group">
         <label for="unitstep">增长数量</label>
-        <input class="form-control" id="unitstep" name="unitstep" step="0.1" [(ngModel)]="currUnit.step" type="number">
+        <input class="form-control" id="unitstep" name="unitstep" step="0.1" [(ngModel)]="currUnit.Step" type="number">
       </div>
-      <button class="btn btn-primary" type="submit" (click)="onAddUnit()" *ngIf="!currUnit.id">添加</button>
-      <button class="btn btn-primary" type="submit" (click)="onAddUnit()" *ngIf="currUnit.id">更新</button>
+      <button class="btn btn-primary" type="submit" (click)="onAddUnit()" *ngIf="!currUnit.Id">添加</button>
+      <button class="btn btn-primary" type="submit" (click)="onAddUnit()" *ngIf="currUnit.Id">更新</button>
     </form>
   </div>
 

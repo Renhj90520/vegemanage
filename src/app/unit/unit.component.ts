@@ -24,7 +24,7 @@ export class UnitComponent implements OnInit {
   }
 
   onAddUnit() {
-    if (this.currUnit.id) {
+    if (this.currUnit.Id) {
       this.unitService.updateUnit(this.currUnit)
         .subscribe(res => {
           if (res.state == 1) {
@@ -55,7 +55,7 @@ export class UnitComponent implements OnInit {
   }
 
   onRemove(index) {
-    let id = this.units[index].id;
+    let id = this.units[index].Id;
     this.unitService.removeUnit(id)
       .subscribe(res => {
         if (res.state == 1) {

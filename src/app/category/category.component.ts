@@ -85,7 +85,7 @@ export class CategoryComponent implements OnInit {
   }
   onRemove(category) {
     if (confirm('确定要删除该商品分类吗？')) {
-      this.categoryService.deleteCategory(category.id)
+      this.categoryService.deleteCategory(category.Id)
         .subscribe(res => {
           if (res.state == 1) {
             this.categories.splice(this.categories.indexOf(category), 1);

@@ -28,22 +28,22 @@
     </thead>
     <tbody>
       <tr *ngFor="let order of orders">
-        <td>{{order.id}}</td>
+        <td>{{order.Id}}</td>
         <td>
-          <p *ngFor="let product of order.products">
-            {{product.name}} <span class="red">￥{{product.price}}</span> &nbsp; X &nbsp;{{product.count}} {{product.unitName}} 小计：<span class="red">￥{{product.cost}}</span>
+          <p *ngFor="let product of order.Products">
+            {{product.Name}} <span class="red">￥{{product.Price}}</span> &nbsp; X &nbsp;{{product.Count}} {{product.UnitName}} 小计：<span class="red">￥{{product.cost}}</span>
           </p>
-          <p class="red">总计：￥{{order.total}} <span *ngIf="order.deliveryCharge>0">含￥5运费</span></p>
-          <p><i class="glyphicon glyphicon-map-marker blue"></i> {{order.street}}</p>
-          <p><i class="glyphicon glyphicon-user blue"></i>{{order.name}}</p>
-          <p><i class="glyphicon glyphicon-phone blue"></i>{{order.phone}}</p>
+          <p class="red">总计：￥{{order.total}} <span *ngIf="order.DeliveryCharge>0">含￥5运费</span></p>
+          <p><i class="glyphicon glyphicon-map-marker blue"></i> {{order.Street}}</p>
+          <p><i class="glyphicon glyphicon-user blue"></i>{{order.Name}}</p>
+          <p><i class="glyphicon glyphicon-phone blue"></i>{{order.Phone}}</p>
         </td>
-        <td>{{order.createTime | mydate }}</td>
-        <td>{{order.state | orderstate}}</td>
+        <td>{{order.CreateTime | mydate }}</td>
+        <td>{{order.State | orderstate}}</td>
         <td>
-          <i class="glyphicon glyphicon-send" role="button" (click)="onSend(order)" *ngIf="order.state==0"></i>
-          <i class="glyphicon glyphicon-remove operator" data-target="#cancelReason" data-toggle="modal" role="button" (click)="onCancelOrder(order)" *ngIf="order.state==0||order.state==1"></i>
-          <i class="glyphicon glyphicon-ok operator" role="button" (click)="onComplete(order)" *ngIf="order.state==0||order.state==1"></i>
+          <i class="glyphicon glyphicon-send" role="button" (click)="onSend(order)" *ngIf="order.State==0"></i>
+          <i class="glyphicon glyphicon-remove operator" data-target="#cancelReason" data-toggle="modal" role="button" (click)="onCancelOrder(order)" *ngIf="order.State==0||order.State==1"></i>
+          <i class="glyphicon glyphicon-ok operator" role="button" (click)="onComplete(order)" *ngIf="order.State==0||order.State==1"></i>
           <i class="glyphicon glyphicon-trash operator" role="button" (click)="onRemoveOrder(order)"></i>
         </td>
       </tr>
