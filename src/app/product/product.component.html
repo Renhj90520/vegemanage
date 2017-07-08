@@ -55,7 +55,7 @@
       </div>
     </fieldset>
     <div class="pictures row">
-      <div class="col-sm-4" *ngFor="let pic of newProduct.pictures;let ii of index">
+      <div class="col-sm-4" *ngFor="let pic of newProduct.Pictures;let ii of index">
         <img class="uploadPic" src="{{pic.Path}}">
         <button class="btn btn-danger btn-xs" (click)="onPicedRemove(pic)">删除</button>
       </div>

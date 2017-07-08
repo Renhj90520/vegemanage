@@ -70,7 +70,7 @@ export class CategoryComponent implements OnInit {
   }
 
   onEdit(category) {
-    if (this.currCategory && this.currCategory.IconPath) {
+    if (this.currCategory && this.currCategory.IconPath && !this.currCategory.Id) {
       this.categoryService.removePic(0, this.currCategory.IconPath)
         .subscribe(res => {
 
@@ -99,7 +99,7 @@ export class CategoryComponent implements OnInit {
     this.categoryService.updateCate(this.currCategory)
       .subscribe(res => {
         if (res.state == 1) {
-          this.currCategory=new Category();
+          this.currCategory = new Category();
           alert("修改成功");
         } else {
           alert(res.message);

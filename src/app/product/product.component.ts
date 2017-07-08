@@ -52,12 +52,10 @@ export class ProductComponent implements OnInit {
       .subscribe(res => {
         this.units = res.body;
         let unit = this.units[0];
-        this.newProduct.UnitId = unit.Id;
-        this.newProduct.UnitName = unit.Name;
-        this.newProduct.Step = unit.Step;
-
         if (!id) {
-          this.newProduct.UnitId = this.units[0].Id;
+          this.newProduct.UnitId = unit.Id;
+          this.newProduct.UnitName = unit.Name;
+          this.newProduct.Step = unit.Step;
         }
       });
     this.categoryService.getAllCategories()
