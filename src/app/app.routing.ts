@@ -21,7 +21,7 @@ export const routing = RouterModule.forRoot([
             { path: 'unit', component: UnitComponent },
             { path: 'product', component: ProductComponent },
             { path: 'user', component: UserComponent },
-            { path: "home", component: HomeComponent, outlet: "primary" }
+            { path: 'home', component: HomeComponent, outlet: 'primary' }
         ], canActivate: [AuthGuard]
     }
 ])

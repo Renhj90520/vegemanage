@@ -7,6 +7,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 import { baseUrl } from '../shared/settings';
 import { NgForm } from '@angular/forms';
+import { Headers } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-product',
@@ -19,11 +20,7 @@ export class ProductComponent implements OnInit {
   units: any[] = [];
   categories: any[] = [];
 
-  uploader: FileUploader = new FileUploader({
-    url: baseUrl + 'upload',
-    method: 'POST',
-    itemAlias: 'upload'
-  });
+  uploader: FileUploader;
   constructor(private productService: ProductService,
     private unitService: UnitService,
     private categoryService: CategoryService,
@@ -31,13 +28,20 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.uploader = new FileUploader({
+      url: baseUrl + 'upload',
+      method: 'POST',
+      itemAlias: 'upload',
+    });
+    this.uploader.authToken = 'Bearer ' + localStorage.getItem('token');
+
     let id;
     this.route.params.forEach((params: Params) => {
       id = +params['id'];
     });
     if (id) {
       this.productService.getProducts(id).subscribe(res => {
-        if (res.state == 1) {
+        if (res.state === 1) {
           this.newProduct = res.body.items[0] || new Product();
         }
       },
@@ -51,7 +55,7 @@ export class ProductComponent implements OnInit {
     this.unitService.getAllUnits()
       .subscribe(res => {
         this.units = res.body;
-        let unit = this.units[0];
+        const unit = this.units[0];
         if (!id) {
           this.newProduct.UnitId = unit.Id;
           this.newProduct.UnitName = unit.Name;
@@ -69,7 +73,7 @@ export class ProductComponent implements OnInit {
   }
 
   onUnitChange(newValue) {
-    let unit = this.units.filter(u => u.Id == newValue)[0];
+    const unit = this.units.filter(u => u.Id === newValue)[0];
     this.newProduct.UnitId = unit.Id;
     this.newProduct.UnitName = unit.Name;
     this.newProduct.Step = unit.Step;
@@ -81,31 +85,31 @@ export class ProductComponent implements OnInit {
         this.productService.updateProducts(this.newProduct.Id, this.newProduct)
           .subscribe(res => {
             if (res.state == 1) {
-              alert("修改成功");
+              alert('修改成功');
               this.newProduct = new Product();
             } else {
-              alert("修改失败：" + res.message);
+              alert('修改失败：' + res.message);
             }
           }, err => {
             alert(err);
-          })
+          });
       } else {
         this.productService.addProduct(this.newProduct)
           .subscribe(res => {
-            alert("添加成功");
+            alert('添加成功');
             this.newProduct = new Product();
           });
       }
     }
   }
   selectFileChanged() {
-    let length = this.uploader.queue.length;
+    const length = this.uploader.queue.length;
     if (length > 0) {
-      let pic = this.uploader.queue[length - 1];
+      const pic = this.uploader.queue[length - 1];
       pic.onSuccess = (res, status, headers) => {
-        if (status == 200) {
-          let ppp = pic;
-          let result = JSON.parse(res);
+        if (status === 200) {
+          const ppp = pic;
+          const result = JSON.parse(res);
           this.newProduct.Pictures.push(result.body);
           ppp.remove();
         } else {
@@ -115,20 +119,20 @@ export class ProductComponent implements OnInit {
 
   }
   onPicRemove(i) {
-    let pic = this.uploader.queue[i];
+    const pic = this.uploader.queue[i];
     if (pic.isUploading) {
       this.uploader.queue[i].remove();
     }
   }
 
   onPicedRemove(pic) {
-    let fileName = pic.Path.substring(pic.Path.lastIndexOf('/'));
+    const fileName = pic.Path.substring(pic.Path.lastIndexOf('/'));
     this.productService.removePic(fileName)
       .subscribe(res => {
-        if (res.state == 1) {
+        if (res.state === 1) {
           this.newProduct.Pictures.splice(this.newProduct.Pictures.indexOf(pic), 1);
         }
-      })
+      });
   }
   onCateChange(newCate) {
     this.newProduct.CategoryId = newCate;

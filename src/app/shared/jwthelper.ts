@@ -4,12 +4,12 @@ import { Injectable } from '@angular/core';
 export class JwtHelper {
     private b64decode(str: string): string {
 
-        let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
         let output: string = '';
 
         str = String(str).replace(/=+$/, '');
-        if (str.length % 4 == 1) {
+        if (str.length % 4 === 1) {
             throw new Error("'atob' failed: The string to be decoded is not correctly encoded.");
         }
 
@@ -41,13 +41,13 @@ export class JwtHelper {
         return this.b64DecodeUnicode(output);
     }
     public decodeToken(token: string): any {
-        let parts = token.split('.');
+        const parts = token.split('.');
 
         if (parts.length !== 3) {
             throw new Error('Jwt must have 3 parts');
         }
 
-        let decoded = this.urlBase64Decode(parts[1]);
+        const decoded = this.urlBase64Decode(parts[1]);
 
         if (!decoded) {
             throw new Error('Can not decode the token');
@@ -64,14 +64,14 @@ export class JwtHelper {
             return null;
         }
 
-        let date = new Date(0);
+        const date = new Date(0);
         date.setUTCSeconds(decoded.exp);
 
         return date;
     }
 
     public isTokenExpired(token: string, offsetSeconds?: number): boolean {
-        let date = this.getTokenExpirationDate(token);
+        const date = this.getTokenExpirationDate(token);
 
         offsetSeconds = offsetSeconds || 0;
 

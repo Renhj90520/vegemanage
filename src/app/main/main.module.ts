@@ -16,6 +16,7 @@ import { HomeComponent } from './home.component';
 
 import { FileUploadModule } from 'ng2-file-upload';
 import { OrderPipe } from '../shared/orderstate.pipe';
+import { ProductPipe } from '../shared/productstate.pipe';
 import { MyDatePipe } from '../shared/mydate.pipe';
 import { HttpClient } from '../shared/httpclient';
 
@@ -37,6 +38,7 @@ import { HttpClient } from '../shared/httpclient';
     UserComponent,
     AdminComponent,
     OrderPipe,
+    ProductPipe,
     MyDatePipe,
     HomeComponent
   ],

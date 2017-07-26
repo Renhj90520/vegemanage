@@ -18,14 +18,14 @@ export class ProductService {
             .map(res => res.json());
     }
 
-    getProducts(id?: number, index?: number, perPage?: number, condition?: any) {
+    getProducts(id?: number, index?: number, perPage?: number, condition?: any, state?: number) {
         let url = baseUrl + 'products';
-        var conditions = [];
+        const conditions = [];
         if (index) {
             conditions.push('index=' + index);
         }
         if (perPage) {
-            conditions.push("perPage=" + perPage);
+            conditions.push('perPage=' + perPage);
         }
 
         if (condition && condition.category && condition.category != 0) {
@@ -55,6 +55,11 @@ export class ProductService {
 
     removePic(picpath) {
         return this.http.delete(baseUrl + 'products/pictures' + picpath)
+            .map(res => res.json());
+    }
+
+    reorder(id1, id2) {
+        return this.http.patch(baseUrl + 'products/exchange/' + id1 + '/' + id2, null)
             .map(res => res.json());
     }
 }

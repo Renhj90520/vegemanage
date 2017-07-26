@@ -79,15 +79,15 @@ export class OrderlistComponent implements OnInit {
 
     var patchDoc = [];
     let stateOp: PatchDoc = new PatchDoc();
-    stateOp.path = '/state';
-    stateOp.value = "2";
+    stateOp.path = '/State';
+    stateOp.value = "4";
     patchDoc.push(stateOp);
     let reasonOp: PatchDoc = new PatchDoc();
-    reasonOp.path = '/cancelreason';
+    reasonOp.path = '/CancelReason';
     reasonOp.value = this.reason;
     patchDoc.push(reasonOp);
     let canceltimeOp = new PatchDoc();
-    canceltimeOp.path = "canceltime";
+    canceltimeOp.path = "CancelTime";
     canceltimeOp.value = new Date();
     patchDoc.push(canceltimeOp);
 
@@ -123,11 +123,11 @@ export class OrderlistComponent implements OnInit {
   onComplete(order) {
     let patchDoc = [];
     let stateOp: PatchDoc = new PatchDoc();
-    stateOp.path = "/state";
-    stateOp.value = "3";
+    stateOp.path = "/State";
+    stateOp.value = "5";
     patchDoc.push(stateOp);
     let finishTimeOp: PatchDoc = new PatchDoc();
-    finishTimeOp.path = "finishtime";
+    finishTimeOp.path = "FinishTime";
     finishTimeOp.value = new Date();
     patchDoc.push(finishTimeOp);
     this.orderService.updateOrder(order.id, patchDoc)
@@ -144,8 +144,8 @@ export class OrderlistComponent implements OnInit {
   onSend(order) {
     let pathDoc = [];
     let stateOp: PatchDoc = new PatchDoc();
-    stateOp.path = "/state";
-    stateOp.value = "1";
+    stateOp.path = "/State";
+    stateOp.value = "3";
     pathDoc.push(stateOp);
     this.orderService.updateOrder(order.id, pathDoc)
       .subscribe(res => {

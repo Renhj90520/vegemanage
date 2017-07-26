@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PagerService } from '../shared/pager.service';
+// import { PagerService } from '../shared/pager.service';
 import { ProductService } from '../product/product.service';
 import { Router } from '@angular/router';
 import { CategoryService } from '../category/category.service';
@@ -13,7 +13,7 @@ import { env } from '../shared/settings';
   selector: 'app-productlist',
   templateUrl: './productlist.component.html',
   styleUrls: ['./productlist.component.css'],
-  providers: [PagerService, ProductService, CategoryService, UnitService]
+  providers: [ProductService, CategoryService, UnitService] // PagerService,
 })
 export class ProductlistComponent implements OnInit {
   products: any[];
@@ -25,13 +25,21 @@ export class ProductlistComponent implements OnInit {
   currProduct: any = {};
 
   units: any[] = [];
-  constructor(private productService: ProductService, private unitService: UnitService, private categoryService: CategoryService, private pagerService: PagerService, private router: Router) { }
+  constructor(private productService: ProductService,
+    private unitService: UnitService,
+    private categoryService: CategoryService,
+    // private pagerService: PagerService,
+    private router: Router) { }
 
   ngOnInit() {
     this.categoryService.getAllCategories()
       .subscribe(res => {
-        if (res.state == 1) {
+        if (res.state === 1) {
           this.categories = res.body;
+          if (this.categories.length > 0) {
+            this.condition.category = this.categories[0].Id;
+            this.doLoading(this.index, this.condition);
+          }
         } else {
           alert(res.message);
         }
@@ -40,7 +48,7 @@ export class ProductlistComponent implements OnInit {
       });
     this.unitService.getAllUnits()
       .subscribe(res => {
-        if (res.state == 1) {
+        if (res.state === 1) {
           this.units = res.body;
         } else {
           alert(res.message);
@@ -48,17 +56,16 @@ export class ProductlistComponent implements OnInit {
       }, err => {
         alert(err);
       });
-    this.doLoading(this.index, this.condition);
   }
 
   doLoading(index: number, condition: any) {
-    this.productService.getProducts(null, index, 20, condition)
+    this.productService.getProducts(null, null, null, condition)
       .subscribe(res => {
-        if (res.state == 1) {
+        if (res.state === 1) {
           this.count = res.body.count;
           this.products = res.body.items;
-          let pager = this.pagerService.getPager(this.count, this.index);
-          this.pages = pager.pages;
+          // const pager = this.pagerService.getPager(this.count, this.index);
+          // this.pages = pager.pages;
         } else {
           alert(res.message);
         }
@@ -71,22 +78,24 @@ export class ProductlistComponent implements OnInit {
     this.doLoading(this.index, this.condition);
   }
 
-  onPrev() {
-    if (this.index <= 1)
-      return;
-    this.index--;
-    this.doLoading(this.index, this.condition);
-  }
-  onPageClick(page) {
-    this.index = page;
-    this.doLoading(this.index, this.condition);
-  }
-  onNext() {
-    if (this.index * 20 >= this.count)
-      return
-    this.index++;
-    this.doLoading(this.index, this.condition);
-  }
+  // onPrev() {
+  //   if (this.index <= 1) {
+  //     return;
+  //   }
+  //   this.index--;
+  //   this.doLoading(this.index, this.condition);
+  // }
+  // onPageClick(page) {
+  //   this.index = page;
+  //   this.doLoading(this.index, this.condition);
+  // }
+  // onNext() {
+  //   if (this.index * 20 >= this.count) {
+  //     return;
+  //   }
+  //   this.index++;
+  //   this.doLoading(this.index, this.condition);
+  // }
 
   onAddProduct() {
     this.router.navigate(['product'], { replaceUrl: true });
@@ -97,11 +106,11 @@ export class ProductlistComponent implements OnInit {
     this.router.navigate(['productlist/' + product.Id], { replaceUrl: true });
   }
   onDelete(product) {
-    if (env === "node") {
+    if (env === 'node') {
       this.productService.updateProducts(product.Id, { State: 0 })
         .subscribe(res => {
-          if (res.state == 1) {
-            this.products.splice(this.products.indexOf(product), 1);
+          if (res.state === 1) {
+            this.products[this.products.indexOf(product)].Stete = 0;
           } else {
             alert(res.message);
           }
@@ -109,15 +118,15 @@ export class ProductlistComponent implements OnInit {
           alert(err);
         });
     } else {
-      var patchDoc = [];
-      let stateOp: PatchDoc = new PatchDoc();
-      stateOp.path = '/state';
-      stateOp.value = "0";
+      const patchDoc = [];
+      const stateOp: PatchDoc = new PatchDoc();
+      stateOp.path = '/State';
+      stateOp.value = '0';
       patchDoc.push(stateOp);
       this.productService.patchProduct(product.Id, patchDoc)
         .subscribe(res => {
-          if (res.state == 1) {
-            this.products.splice(this.products.indexOf(product), 1);
+          if (res.state === 1) {
+            this.products[this.products.indexOf(product)].State = 0;
           } else {
             alert(res.message);
           }
@@ -126,8 +135,28 @@ export class ProductlistComponent implements OnInit {
         });
     }
   }
+  onSale(product) {
+    const patchDoc = [];
+    const stateOp: PatchDoc = new PatchDoc();
+    stateOp.path = '/State';
+    stateOp.value = '1';
+    patchDoc.push(stateOp);
+    this.productService.patchProduct(product.Id, patchDoc)
+      .subscribe(res => {
+        if (res.state === 1) {
+          this.products[this.products.indexOf(product)].State = 1;
+        } else {
+          alert(res.message);
+        }
+      }, err => {
+        alert(err);
+      });
+  }
+
   onClear() {
+    const cate = this.condition.category;
     this.condition = {};
+    this.condition.category = cate;
     this.onSearch();
   }
 
@@ -136,7 +165,7 @@ export class ProductlistComponent implements OnInit {
   }
 
   onUnitChange(newValue) {
-    let unit = this.units.filter(u => u.id == newValue)[0];
+    const unit = this.units.filter(u => u.id == newValue)[0];
     this.currProduct.UnitId = unit.id;
     this.currProduct.UnitName = unit.name;
     this.currProduct.Step = unit.step;
@@ -144,59 +173,109 @@ export class ProductlistComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (form.valid) {
-      if (env === "node") {
+      if (env === 'node') {
         this.productService.updateProducts(this.currProduct.Id, this.currProduct)
           .subscribe(res => {
-            if (res.state == 1) {
-              alert("修改成功");
+            if (res.state === 1) {
+              alert('修改成功');
               this.currProduct = new Product();
             } else {
               alert(res.message);
             }
           }, err => {
             alert(err);
-          })
+          });
       } else {
-        var patchDoc = [];
-        let priceOp: PatchDoc = new PatchDoc();
-        priceOp.path = '/price';
+        const patchDoc = [];
+        const priceOp: PatchDoc = new PatchDoc();
+        priceOp.path = '/Price';
         priceOp.value = this.currProduct.Price;
         patchDoc.push(priceOp);
-        let nameOp: PatchDoc = new PatchDoc();
-        nameOp.path = '/name';
+        const nameOp: PatchDoc = new PatchDoc();
+        nameOp.path = '/Name';
         nameOp.value = this.currProduct.Name;
         patchDoc.push(nameOp);
-        let unitIdOp = new PatchDoc();
-        unitIdOp.path = '/unitId';
+        const unitIdOp = new PatchDoc();
+        unitIdOp.path = '/UnitId';
         unitIdOp.value = this.currProduct.UnitId;
         patchDoc.push(unitIdOp);
-        let unitNameOp = new PatchDoc();
-        unitNameOp.path = '/unitName';
+        const unitNameOp = new PatchDoc();
+        unitNameOp.path = '/UnitName';
         unitNameOp.value = this.currProduct.UnitName;
         patchDoc.push(unitNameOp);
-        let stepOp = new PatchDoc();
-        stepOp.path = '/step';
+        const stepOp = new PatchDoc();
+        stepOp.path = '/Step';
         stepOp.value = this.currProduct.Step;
         patchDoc.push(stepOp);
-        let categoryIdOp = new PatchDoc();
-        categoryIdOp.path = '/categoryId';
+        const categoryIdOp = new PatchDoc();
+        categoryIdOp.path = '/CategoryId';
         categoryIdOp.value = this.currProduct.CategoryId;
         patchDoc.push(categoryIdOp);
         this.productService.patchProduct(this.currProduct.Id, patchDoc)
           .subscribe(res => {
-            if (res.state == 1) {
-              alert("修改成功");
+            if (res.state === 1) {
+              alert('修改成功');
               this.currProduct = new Product();
             } else {
-              alert("修改失败：" + res.message);
+              alert('修改失败：' + res.message);
             }
           }, err => {
             alert(err);
-          })
+          });
       }
     }
   }
   onCateChange(newCate) {
     this.currProduct.CategoryId = newCate;
+  }
+
+  onCateConditionChange(cate) {
+    this.index = 1;
+    this.condition.category = cate;
+    this.doLoading(this.index, this.condition);
+  }
+  onUp(product) {
+    const index = this.products.indexOf(product);
+    if (index === 0) {
+      return;
+    }
+
+    const pro1 = this.products[index];
+    const pro2 = this.products[index - 1];
+    this.productService.reorder(pro1.Id, pro2.Id)
+      .subscribe(res => {
+        if (res.state === 1) {
+          this.products.splice(index, 1);
+          this.products.splice(index - 1, 0, pro1);
+        } else {
+          alert(res.message);
+        }
+      }, err => {
+        alert(err);
+      });
+
+  }
+
+  onDown(product) {
+    const index = this.products.indexOf(product);
+
+    if (index === this.products.length) {
+      return;
+    }
+
+    const pro1 = this.products[index];
+    const pro2 = this.products[index + 1];
+
+    this.productService.reorder(pro1.Id, pro2.Id)
+      .subscribe(res => {
+        if (res.state === 1) {
+          this.products.splice(index + 1, 1);
+          this.products.splice(index, 0, pro2);
+        } else {
+          alert(res.message);
+        }
+      }, err => {
+        alert(err);
+      });
   }
 }
