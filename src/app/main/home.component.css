@@ -1,0 +1,13 @@
+#pwdModal .jumbotron{
+    width: 50%;
+    height: auto;
+    margin: 200px auto;
+   
+}
+@media(max-width:768px){
+    #pwdModal .jumbotron{
+        width: 90%;
+        height: auto;
+        margin: 100px auto;
+    }
+}

@@ -55,8 +55,9 @@ export class OrderlistComponent implements OnInit {
   }
 
   onPrev() {
-    if (this.index <= 1)
+    if (this.index <= 1) {
       return;
+    }
     this.index--;
     this.doLoading(this.index, this.condition);
   }
@@ -67,8 +68,9 @@ export class OrderlistComponent implements OnInit {
   }
 
   onNext() {
-    if (this.index * 20 >= this.count)
+    if (this.index * 20 >= this.count) {
       return;
+    }
     this.index++;
     this.doLoading(this.index, this.condition);
   }

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
@@ -17,6 +17,7 @@ import { HomeComponent } from './home.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { OrderPipe } from '../shared/orderstate.pipe';
 import { ProductPipe } from '../shared/productstate.pipe';
+import { SexPipe } from '../shared/sex.pipe';
 import { MyDatePipe } from '../shared/mydate.pipe';
 import { HttpClient } from '../shared/httpclient';
 
@@ -27,6 +28,7 @@ import { HttpClient } from '../shared/httpclient';
     BrowserModule,
     FormsModule,
     HttpModule,
+    ReactiveFormsModule,
     RouterModule
   ],
   declarations: [
@@ -38,6 +40,7 @@ import { HttpClient } from '../shared/httpclient';
     UserComponent,
     AdminComponent,
     OrderPipe,
+    SexPipe,
     ProductPipe,
     MyDatePipe,
     HomeComponent

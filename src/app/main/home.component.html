@@ -17,9 +17,9 @@
             <i class="glyphicon glyphicon-triangle-bottom"></i>
           </a>
           <ul class="dropdown-menu">
-            <!--<li><a href="#"><i class="glyphicon glyphicon-user"></i> &nbsp;用户信息</a></li>
-            <li><a href="#"><i class="glyphicon glyphicon-cog"></i> &nbsp;设置</a></li>
-            <li class="divider"></li>-->
+            <li><a data-target="#pwdModal" data-toggle="modal"><i class="glyphicon glyphicon-user"></i> &nbsp;修改密码</a></li>
+            <!-- <li><a href="#"><i class="glyphicon glyphicon-cog"></i> &nbsp;设置</a></li> -->
+            <li class="divider"></li>
             <li><a (click)="onLogout()"><i class="glyphicon glyphicon-log-out"></i> &nbsp;注销</a></li>
           </ul>
         </li>
@@ -40,6 +40,7 @@
               <ul class="nav nav-second-level">-->
                 <li><a routerLink="/unit">单位管理</a></li>
                 <li><a routerLink="/category">商品分类管理</a></li>
+                <li><a routerLink="/user">用户列表</a></li>
               <!--</ul>
             </li>-->
           </ul>
@@ -47,5 +48,32 @@
       </div>
     </div>
   </nav>
+  <div class="modal fade" id="pwdModal">
+    <div class="jumbotron">
+      <form class="form" id="pwdForm" [formGroup]="changepwd">
+        <div class="form-group">
+          <label for="oldpwd">旧密码</label>
+          <input class="form-control" id="oldpwd" name="oldpwd" type="password" formControlName="oldpwd">
+          <p class="error" *ngIf="(changepwd.controls.oldpwd.dirty||changepwd.controls.oldpwd.pristine)&&!changepwd.controls.oldpwd.valid">旧密码不能为空</p>
+        </div>
+        <form formGroupName="passwords">
+          <div class="form-group">
+            <label for="newpwd">新密码</label>
+            <input class="form-control" id="newpwd" name="newpwd" type="password" formControlName="newpwd">
+             <p class="error" *ngIf="(changepwd.controls.passwords.controls.newpwd.dirty||changepwd.controls.passwords.controls.newpwd.pristine)&&!changepwd.controls.passwords.controls.newpwd.valid">新密码不能为空</p> 
+            <p class="error" *ngIf="changepwd.controls.passwords?.errors?.areEqual">两次密码输入不相同</p>
+          </div>
+          <div class="form-group">
+            <label for="confirmpwd">确认密码</label>
+            <input class="form-control" id="confirmpwd" name="confirmpwd" type="password" formControlName="confirmpwd">
+             <p class="error" *ngIf="(changepwd.controls.passwords.controls.confirmpwd.dirty||changepwd.controls.passwords.controls.confirmpwd.pristine)&&!changepwd.controls.passwords.controls.confirmpwd.valid">新密码不能为空</p> 
+            <p class="error" *ngIf="changepwd.controls.passwords?.errors?.areEqual">两次密码输入不相同</p>
+          </div>
+        </form>
+        
+        <button class="btn btn-primary" data-target="#pwdModal" data-toggle="modal" [disabled]="!changepwd.valid" (click)="onChangePwd(changepwd.value,changepwd.valid)">确定</button>
+      </form>
+    </div>
+  </div>
   <router-outlet></router-outlet>
 </div>

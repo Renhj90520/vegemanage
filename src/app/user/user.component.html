@@ -1,3 +1,36 @@
 <div id="page-wrapper">
-  <h3>用户管理</h3>
+  <h3>用户列表</h3>
+  <hr>
+  <form class="form-inline">
+    <div class="form-group">
+      <input class="form-control" name="keyword" type="search" [(ngModel)]="condition.keyword" placeholder="输入OpenId/昵称">
+    </div>
+    <button class="btn btn-primary btn-sm" (click)="onSearch()"><i class="glyphicon glyphicon-search"></i></button>
+  </form>
+
+  <table class="table tabler-hover">
+    <thead>
+      <tr>
+        <th>用户昵称</th>
+        <th>OpenId</th>
+        <th>性别</th>
+        <th>省</th>
+        <th>市</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{user.Name}}</td>
+        <td>{{user.OpenId}} </td>
+        <td>{{user.Sex | sex }}</td>
+        <td>{{user.Province}}</td>
+        <td>{{user.City}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <ul class="pagination pagerbottom" *ngIf="pages.length>0">
+    <li [class.disabled]="index<=1"><a (click)="onPrev()">&laquo;</a></li>
+    <li *ngFor="let page of pages" [class.active]="page==index"><a (click)="onPageClick(page)">{{page}}</a></li>
+    <li [class.disabled]="index*20>=count"><a (click)="onNext()">&raquo;</a></li>
+  </ul>
 </div>

@@ -23,11 +23,10 @@ export class LoginComponent implements OnInit {
   onLogin() {
     this.loginService.login(this.userName, this.password).subscribe(res => {
       if (res.state == 1) {
+        localStorage.setItem('username', this.userName);
         if (this.rememberPwd) {
-          localStorage.setItem('username', this.userName);
           localStorage.setItem('pwd', this.password);
         } else {
-          localStorage.removeItem('username');
           localStorage.removeItem('pwd');
         }
         localStorage.setItem('token', res.body);
