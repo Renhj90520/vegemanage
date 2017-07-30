@@ -5,6 +5,7 @@
       <tr>
         <th>分类名称</th>
         <th>图标路径</th>
+        <th>状态</th>
         <th>操作</th>
       </tr>
     </thead>
@@ -12,8 +13,11 @@
       <tr *ngFor="let category of categories">
         <td>{{category.Name}}</td>
         <td>{{category.IconPath}}</td>
+        <td>{{category.State|catestate}}</td>
         <td>
           <i class="glyphicon glyphicon-edit operator" role="button" (click)="onEdit(category)"></i>
+          <i class="glyphicon glyphicon-ban-circle operator" *ngIf="category.State==1" (click)="onDisable(category)"></i>
+          <i class="glyphicon glyphicon-ok-circle operator" *ngIf="category.State==0" (click)="onEnable(category)"></i>
           <i class="glyphicon glyphicon-remove" role="button" (click)="onRemove(category)"></i>
         </td>
       </tr>
@@ -22,15 +26,15 @@
   <form class="form-inline bottom">
     <div class="form-group">
       <label for="cateName">名称</label>
-      <input class="form-control" id="cateName" name="cateName" [(ngModel)]="currCategory.Name" type="text">
+      <input class="form-control" id="cateName" name="cateName" type="text" [(ngModel)]="currCategory.Name">
     </div>
     <div class="form-group">
       <label for="upload">选择图标</label>
-      <input type="file" ng2FileSelect [uploader]="uploader" (change)="selectFileOnChanged($event)">
+      <input type="file" ng2FileSelect [uploader]="uploader" (change)="selectFileOnChanged()">
     </div>
     <div class="form-group">
       <div *ngIf="currCategory.IconPath">
-        <img src="{{currCategory.IconPath}}" alt="" class="uploadPic">
+        <img class="uploadPic" src="{{currCategory.IconPath}}" alt>
         <button class="btn btn-danger btn-xs" (click)="onPicRemove()">删除</button>
       </div>
       <div *ngFor="let item of uploader.queue">

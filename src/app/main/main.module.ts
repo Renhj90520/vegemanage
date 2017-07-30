@@ -19,6 +19,7 @@ import { OrderPipe } from '../shared/orderstate.pipe';
 import { ProductPipe } from '../shared/productstate.pipe';
 import { SexPipe } from '../shared/sex.pipe';
 import { MyDatePipe } from '../shared/mydate.pipe';
+import { CateStatePipe } from '../shared/catestate.pipe';
 import { HttpClient } from '../shared/httpclient';
 
 @NgModule({
@@ -40,6 +41,7 @@ import { HttpClient } from '../shared/httpclient';
     UserComponent,
     AdminComponent,
     OrderPipe,
+    CateStatePipe,
     SexPipe,
     ProductPipe,
     MyDatePipe,

@@ -1,3 +1,18 @@
 .modal{
     padding: 20px;
 }
+
+.green{
+    color: white;
+    background-color: #99cc00;
+}
+
+.redback{
+    color: white;
+    background-color: orange;
+}
+
+.gray{
+    color: white;
+    background-color: #AAAAAA;
+}

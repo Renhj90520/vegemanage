@@ -39,7 +39,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let order of orders">
+      <tr *ngFor="let order of orders" [class.green]="order.IsPaid==1" [class.redback]="order.IsPaid==0" [class.gray]="order.IsPaid==2">
         <td>{{order.Id}}</td>
         <td>
           <p *ngFor="let product of order.Products">

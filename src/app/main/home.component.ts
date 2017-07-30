@@ -31,10 +31,10 @@ export class HomeComponent implements OnInit {
     localStorage.removeItem('token');
     this.route.navigate(['login']);
   }
-  onChangePwd(pwdinfo, valid) {
+  onChangePwd() {
     this.pwdwrapper.UserName = localStorage.getItem('username');
-    this.pwdwrapper.OldPwd = pwdinfo.oldpwd;
-    this.pwdwrapper.NewPwd = pwdinfo.passwords.newpwd;
+    this.pwdwrapper.OldPwd = this.changepwd.value.oldpwd;
+    this.pwdwrapper.NewPwd = this.changepwd.value.passwords.newpwd;
     this.userService.updatePwd(this.pwdwrapper)
       .subscribe(res => {
         if (res.state === 1) {

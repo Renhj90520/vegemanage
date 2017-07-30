@@ -33,4 +33,9 @@ export class CategoryService {
         return this.http.put(baseUrl + 'categories/', cate)
             .map(res => res.json());
     }
+
+    patchCate(id, cate) {
+        return this.http.patch(baseUrl + 'categories/' + id, cate)
+            .map(res => res.json());
+    }
 }
