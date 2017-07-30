@@ -1,4 +1,4 @@
-/////<reference path="../../../typings/globals/jquery/index.d.ts" />
+/////<reference path='../../../typings/globals/jquery/index.d.ts' />
 import { Component, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
 
@@ -22,7 +22,7 @@ export class OrderlistComponent implements OnInit {
   condition: any = {};
   pages: any[] = [];
   currOrder: any;
-  reason: string = "超出配送范围，谢谢关注。";
+  reason: string = '超出配送范围，谢谢关注。';
   ngOnInit() {
     this.doLoading(this.index, this.condition);
   }
@@ -79,79 +79,79 @@ export class OrderlistComponent implements OnInit {
   }
   onSubmitCancel() {
 
-    var patchDoc = [];
-    let stateOp: PatchDoc = new PatchDoc();
+    const patchDoc = [];
+    const stateOp: PatchDoc = new PatchDoc();
     stateOp.path = '/State';
-    stateOp.value = "4";
+    stateOp.value = '4';
     patchDoc.push(stateOp);
-    let reasonOp: PatchDoc = new PatchDoc();
+    const reasonOp: PatchDoc = new PatchDoc();
     reasonOp.path = '/CancelReason';
     reasonOp.value = this.reason;
     patchDoc.push(reasonOp);
-    let canceltimeOp = new PatchDoc();
-    canceltimeOp.path = "CancelTime";
+    const canceltimeOp = new PatchDoc();
+    canceltimeOp.path = '/CancelTime';
     canceltimeOp.value = new Date();
     patchDoc.push(canceltimeOp);
 
-    this.orderService.updateOrder(this.currOrder.id, patchDoc)
+    this.orderService.updateOrder(this.currOrder.Id, patchDoc)
       .subscribe(res => {
-        if (res.state == 1) {
-          this.currOrder.state = 2;
-          this.currOrder.reason = this.reason;
+        if (res.state === 1) {
+          this.currOrder.State = 4;
+          this.currOrder.CancelReason = this.reason;
           // $('.glyphicon.glyphicon-remove.operator').click();
         } else {
           alert(res.message);
         }
       }, err => {
         alert(err);
-      })
+      });
   }
 
   onRemoveOrder(order) {
     if (confirm('确认删除该订单吗？')) {
-      this.orderService.removeOrder(order.id)
+      this.orderService.removeOrder(order.Id)
         .subscribe(res => {
-          if (res.state == 1) {
+          if (res.state === 1) {
             this.orders.splice(this.orders.indexOf(order), 1);
           } else {
             alert(res.message);
           }
         }, err => {
           alert(err);
-        })
+        });
     }
   }
 
   onComplete(order) {
-    let patchDoc = [];
-    let stateOp: PatchDoc = new PatchDoc();
-    stateOp.path = "/State";
-    stateOp.value = "5";
+    const patchDoc = [];
+    const stateOp: PatchDoc = new PatchDoc();
+    stateOp.path = '/State';
+    stateOp.value = '5';
     patchDoc.push(stateOp);
-    let finishTimeOp: PatchDoc = new PatchDoc();
-    finishTimeOp.path = "FinishTime";
+    const finishTimeOp: PatchDoc = new PatchDoc();
+    finishTimeOp.path = '/FinishTime';
     finishTimeOp.value = new Date();
     patchDoc.push(finishTimeOp);
-    this.orderService.updateOrder(order.id, patchDoc)
+    this.orderService.updateOrder(order.Id, patchDoc)
       .subscribe(res => {
-        if (res.state == 1) {
+        if (res.state === 1) {
           order.state = 3;
-        }
-        else
+        } else {
           alert(res.message);
+        }
       },
       err => alert(err));
   }
 
   onSend(order) {
-    let pathDoc = [];
-    let stateOp: PatchDoc = new PatchDoc();
-    stateOp.path = "/State";
-    stateOp.value = "3";
+    const pathDoc = [];
+    const stateOp: PatchDoc = new PatchDoc();
+    stateOp.path = '/State';
+    stateOp.value = '3';
     pathDoc.push(stateOp);
-    this.orderService.updateOrder(order.id, pathDoc)
+    this.orderService.updateOrder(order.Id, pathDoc)
       .subscribe(res => {
-        if (res.state == 1) {
+        if (res.state === 1) {
           order.state = 1;
         } else {
           alert(res.message);

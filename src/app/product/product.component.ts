@@ -84,7 +84,7 @@ export class ProductComponent implements OnInit {
       if (this.newProduct.Id) {
         this.productService.updateProducts(this.newProduct.Id, this.newProduct)
           .subscribe(res => {
-            if (res.state == 1) {
+            if (res.state === 1) {
               alert('修改成功');
               this.newProduct = new Product();
             } else {

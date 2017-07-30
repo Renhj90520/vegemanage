@@ -165,10 +165,10 @@ export class ProductlistComponent implements OnInit {
   }
 
   onUnitChange(newValue) {
-    const unit = this.units.filter(u => u.id == newValue)[0];
-    this.currProduct.UnitId = unit.id;
-    this.currProduct.UnitName = unit.name;
-    this.currProduct.Step = unit.step;
+    const unit = this.units.filter(u => u.Id === newValue)[0];
+    this.currProduct.UnitId = unit.Id;
+    this.currProduct.UnitName = unit.Name;
+    this.currProduct.Step = unit.Step;
   }
 
   onSubmit(form: NgForm) {

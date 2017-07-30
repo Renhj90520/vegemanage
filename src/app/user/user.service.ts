@@ -22,7 +22,7 @@ export class UserService {
         if (querylist.length > 0) {
             url += '?' + querylist.join('&');
         }
-        return this.http.get(baseUrl + 'users')
+        return this.http.get(url)
             .map(res => res.json());
 
     }
