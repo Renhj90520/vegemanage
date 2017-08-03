@@ -1,0 +1,62 @@
+<div id="page-wrapper">
+  <h3>优惠券管理</h3>
+  <table class="table table-hover table-bordered table-responsive">
+    <thead>
+      <tr>
+        <th>优惠标记</th>
+        <th>开始时间</th>
+        <th>结束时间</th>
+        <th>二维码路径</th>
+        <th>状态</th>
+        <th>操作</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let coupon of coupons">
+        <td>{{coupon.Code}}</td>
+        <td>{{coupon.Begin|day}}</td>
+        <td>{{coupon.End|day}}</td>
+        <td>{{coupon.QR_Path}}</td>
+        <td>{{coupon.State|catestate}}</td>
+        <td>
+          <i class="glyphicon glyphicon-edit operator" role="button" (click)="onEdit(coupon)"></i>
+          <i class="glyphicon glyphicon-ban-circle operator" *ngIf="coupon.State==1" (click)="onDisable(coupon)"></i>
+          <i class="glyphicon glyphicon-ok-circle operator" *ngIf="coupon.State==0" (click)="onEnable(coupon)"></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <form class="form-inline bottom">
+    <div class="form-group">
+      <label for="code">优惠标记</label>
+      <input class="form-control" id="code" name="code" type="text" [(ngModel)]="currCoupon.Code">
+    </div>
+    <div class="form-group">
+      <label for="begin">开始时间</label>
+      <input class="form-control" id="begin" name="begin" type="date" [(ngModel)]="currCoupon.Begin">
+    </div>
+    <div class="form-group">
+      <label for="end">结束时间</label>
+      <input class="form-control" id="end" name="end" type="date" [(ngModel)]="currCoupon.End">
+    </div>
+    <div class="form-group">
+      <label for="upload">选择图标</label>
+      <input type="file" ng2FileSelect [uploader]="uploader" (change)="selectFileOnChanged()">
+    </div>
+    <div class="form-group">
+      <div *ngIf="currCoupon.QR_Path">
+        <img class="uploadPic" src="{{currCoupon.QR_Path}}" alt>
+        <button class="btn btn-danger btn-xs" (click)="onPicRemove()">删除</button>
+      </div>
+      <div *ngFor="let item of uploader.queue">
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" *ngIf="item" [ngStyle]="{'width':item.progress+'%'}"></div>
+          </div>
+          <button class="btn btn-xs btn-primary" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess"><i class="glyphicon glyphicon-upload"></i>上传</button>
+          <button class="btn btn-xs btn-danger" (click)="item.remove()"><i class="glyphicon glyphicon-trash"></i>删除</button>
+      </div>
+    </div>
+    <button class="btn btn-primary" (click)="onSubmit()" *ngIf="!currCoupon.Id">添加</button>
+    <button class="btn btn-primary" (click)="onUpdate()" *ngIf="currCoupon.Id">更新</button>
+  </form>
+</div>

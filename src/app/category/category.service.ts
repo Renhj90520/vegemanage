@@ -38,4 +38,9 @@ export class CategoryService {
         return this.http.patch(baseUrl + 'categories/' + id, cate)
             .map(res => res.json());
     }
+
+    reorder(id1, id2) {
+        return this.http.put(baseUrl + 'categories/reorder/' + id1 + '/' + id2, null)
+            .map(res => res.json());
+    }
 }

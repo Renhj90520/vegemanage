@@ -160,4 +160,11 @@ export class OrderlistComponent implements OnInit {
         alert(err);
       });
   }
+  onStateConditionChange(state) {
+    this.index = 1;
+    if (state != -1) {
+      this.condition.state = state;
+    }
+    this.doLoading(this.index, this.condition);
+  }
 }

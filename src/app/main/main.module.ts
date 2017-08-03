@@ -21,6 +21,8 @@ import { SexPipe } from '../shared/sex.pipe';
 import { MyDatePipe } from '../shared/mydate.pipe';
 import { CateStatePipe } from '../shared/catestate.pipe';
 import { HttpClient } from '../shared/httpclient';
+import { DayPipe } from '../shared/day.pipe';
+import { CouponComponent } from '../coupon/coupon.component';
 
 @NgModule({
   imports: [
@@ -39,11 +41,13 @@ import { HttpClient } from '../shared/httpclient';
     ProductlistComponent,
     OrderlistComponent,
     UserComponent,
+    CouponComponent,
     AdminComponent,
     OrderPipe,
     CateStatePipe,
     SexPipe,
     ProductPipe,
+    DayPipe,
     MyDatePipe,
     HomeComponent
   ],

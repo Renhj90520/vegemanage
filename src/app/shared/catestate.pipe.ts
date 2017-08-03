@@ -8,6 +8,8 @@ export class CateStatePipe implements PipeTransform {
         switch (value) {
             case '0': return '停用';
             case '1': return '启用';
+            case 0: return '停用';
+            case 1: return '启用';
             default: return '';
         }
     }

@@ -25,6 +25,9 @@ export class OrderService {
         if (condition.noshowRemove) {
             url += '&noshowRemove=true'
         }
+        if (condition.state) {
+            url += '&state=' + condition.state;
+        }
 
         return this.http.get(url)
             .map(res => res.json());

@@ -152,4 +152,48 @@ export class CategoryComponent implements OnInit {
         alert(err);
       });
   }
+  onUp(product) {
+    const index = this.categories.indexOf(product);
+    if (index === 0) {
+      return;
+    }
+
+    const cate1 = this.categories[index];
+    const cate2 = this.categories[index - 1];
+    this.categoryService.reorder(cate1.Id, cate2.Id)
+      .subscribe(res => {
+        if (res.state === 1) {
+          this.categories.splice(index, 1);
+          this.categories.splice(index - 1, 0, cate1);
+        } else {
+          alert(res.message);
+        }
+      }, err => {
+        alert(err);
+      });
+
+  }
+
+  onDown(product) {
+    const index = this.categories.indexOf(product);
+
+    if (index === this.categories.length) {
+      return;
+    }
+
+    const cate1 = this.categories[index];
+    const cate2 = this.categories[index + 1];
+
+    this.categoryService.reorder(cate1.Id, cate2.Id)
+      .subscribe(res => {
+        if (res.state === 1) {
+          this.categories.splice(index + 1, 1);
+          this.categories.splice(index, 0, cate2);
+        } else {
+          alert(res.message);
+        }
+      }, err => {
+        alert(err);
+      });
+  }
 }

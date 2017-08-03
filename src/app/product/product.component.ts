@@ -47,7 +47,7 @@ export class ProductComponent implements OnInit {
       },
         err => {
           alert(err);
-        })
+        });
     }
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false;
@@ -73,7 +73,7 @@ export class ProductComponent implements OnInit {
   }
 
   onUnitChange(newValue) {
-    const unit = this.units.filter(u => u.Id === newValue)[0];
+    const unit = this.units.filter(u => u.Id == newValue)[0];
     this.newProduct.UnitId = unit.Id;
     this.newProduct.UnitName = unit.Name;
     this.newProduct.Step = unit.Step;

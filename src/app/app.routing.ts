@@ -7,6 +7,7 @@ import { ProductComponent } from './product/product.component';
 import { ProductlistComponent } from './productlist/productlist.component';
 import { UnitComponent } from './unit/unit.component';
 import { UserComponent } from './user/user.component';
+import { CouponComponent } from './coupon/coupon.component';
 import { AuthGuard } from './shared/authguard';
 
 export const routing = RouterModule.forRoot([
@@ -21,7 +22,8 @@ export const routing = RouterModule.forRoot([
             { path: 'unit', component: UnitComponent },
             { path: 'product', component: ProductComponent },
             { path: 'user', component: UserComponent },
-            { path: 'home', component: HomeComponent, outlet: 'primary' }
+            { path: 'home', component: HomeComponent, outlet: 'primary' },
+            { path: 'coupon', component: CouponComponent }
         ], canActivate: [AuthGuard]
     }
 ])
