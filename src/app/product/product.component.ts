@@ -40,9 +40,9 @@ export class ProductComponent implements OnInit {
       id = +params['id'];
     });
     if (id) {
-      this.productService.getProducts(id).subscribe(res => {
+      this.productService.getProduct(id).subscribe(res => {
         if (res.state === 1) {
-          this.newProduct = res.body.items[0] || new Product();
+          this.newProduct = res.body || new Product();
         }
       },
         err => {

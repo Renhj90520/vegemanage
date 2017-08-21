@@ -48,6 +48,11 @@ export class ProductService {
             .map(res => res.json());
     }
 
+    getProduct(id) {
+        return this.http.get(baseUrl + 'products/' + id)
+            .map(res => res.json());
+    }
+
     updateProducts(id: number, product: any) {
         return this.http.put(baseUrl + 'products/' + id, product)
             .map(res => res.json());
