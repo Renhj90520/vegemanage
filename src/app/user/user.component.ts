@@ -64,4 +64,17 @@ export class UserComponent implements OnInit {
         alert(err);
       });
   }
+  syncInfo(user) {
+    this.userService.syncInfo(user.OpenId)
+      .subscribe(res => {
+        if (res.state === 1) {
+          const index = this.users.indexOf(user);
+          this.users.splice(index, 1, res.body);
+        } else {
+          alert(res.message);
+        }
+      }, err => {
+        alert(err);
+      });
+  }
 }

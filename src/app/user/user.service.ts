@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { baseUrl } from '../shared/settings';
+import { baseUrl, authUrl } from '../shared/settings';
 import { HttpClient } from '../shared/httpclient';
 import 'rxjs/add/operator/map';
 
@@ -8,7 +8,7 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     getUsers(index, perPage, condition) {
-        var url = baseUrl + 'users';
+        let url = baseUrl + 'users';
         const querylist = [];
         if (index) {
             querylist.push('index=' + index);
@@ -29,6 +29,11 @@ export class UserService {
 
     updatePwd(pwdwrapper) {
         return this.http.put(baseUrl + 'users/changepwd', pwdwrapper)
+            .map(res => res.json());
+    }
+
+    syncInfo(openid) {
+        return this.http.patch(authUrl + 'updateuserinfo/' + openid, '')
             .map(res => res.json());
     }
 }

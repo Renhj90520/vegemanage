@@ -11,20 +11,24 @@
   <table class="table even tabler-hover">
     <thead>
       <tr>
-        <th>用户昵称</th>
+        <th>姓名</th>
+        <th>昵称</th>
         <th>OpenId</th>
         <th>性别</th>
         <th>省</th>
         <th>市</th>
+        <th>操作</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let user of users">
         <td>{{user.Name}}</td>
+        <td>{{user.NickName}}</td>
         <td>{{user.OpenId}} </td>
         <td>{{user.Sex | sex }}</td>
         <td>{{user.Province}}</td>
         <td>{{user.City}}</td>
+        <td><i class="glyphicon glyphicon-refresh operator" (click)="syncInfo(user)"></i></td>
       </tr>
     </tbody>
   </table>
