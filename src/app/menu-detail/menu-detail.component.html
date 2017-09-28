@@ -1,0 +1,81 @@
+<div id="page-wrapper">
+  <h3>菜谱内容</h3>
+  <hr>
+  <form class="form" (ngSubmit)="save()" [formGroup]="menuForm">
+    <fieldset>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <label for="name">菜谱名称</label>
+          <input class="form-control" formControlName="name" id="name" name="name" type="text">
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="form-group">
+          <label for="upload">选择图片</label>
+          <input type="file" ng2FileSelect multiple [uploader]="uploader" (change)="selectFileChanged()">
+        </div>
+        <div class="pictures row">
+          <div class="col-sm-4" *ngIf="menu&&menu.Picture">
+            <img class="uploadPic" src="{{menu.Picture}}">
+          </div>
+          <div class="col-sm-4" *ngFor="let item of uploader.queue;let i of index">
+            <div class="progress">
+              <div class="progress-bar" role="progressbar" *ngIf="item" [ngStyle]="{'width':item.progress+'%'}"></div>
+            </div>
+            <button class="btn btn-xs btn-primary" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess"><i class="glyphicon glyphicon-upload"></i>上传</button>
+            <button class="btn btn-xs btn-danger" (click)="onPicRemove(i)"><i class="glyphicon glyphicon-trash"></i>删除</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-8" style="margin-top:12px;">
+        <h4>食材</h4>
+      </div>
+      <div class="col-sm-8" formArrayName="recipes" *ngFor="let recipe of recipes.controls;let i=index">
+        <div class="form-group" [formGroupName]="i">
+          <div class="row">
+            <div class="col-sm-5">
+              <label for="category{{i}}">分类</label>
+              <select class="form-control" formControlName="cateId" id="category{{i}}" name="category" (change)="catechange($event,i)">
+                <option *ngFor="let category of categories" value="{{category.Id}}">{{category.Name}}</option>
+              </select>
+            </div>
+            <div class="col-sm-5">
+              <label for="recipe{{i}}">食材</label>
+              <select class="form-control" formControlName="productId" id="recipe{{i}}" name="recipe{{i}}">
+                <option *ngFor="let product of productsWithIndex[i]" value="{{product.Id}}">{{product.Name}}</option>
+              </select>
+            </div>
+            <div class="col-sm-2">
+              <i class="glyphicon glyphicon-minus-sign bigoperator" (click)="removeRecipe(i)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <button class="btn btn-primary" (click)="addRecipes($event)">添加食材</button>
+      </div>
+      <div class="col-sm-8" style="margin-top:12px;">
+        <h4>步骤</h4>
+      </div>
+      <div class="col-sm-8" formArrayName="steps" *ngFor="let step of steps.controls;let i=index">
+        <div class="form-group" [formGroupName]="i">
+          <div class="row">
+            <div class="col-sm-10">
+              <label for="step{{i}}">步骤{{i+1}}:</label>
+              <textarea class="form-control" formControlName="description" id="step{{i}}" name="step{{i}}" cols="30" rows="3"></textarea>
+            </div>
+            <div class="col-sm-2">
+              <i class="glyphicon glyphicon-minus-sign bigoperator" (click)="removeStep(i)"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <button class="btn btn-primary" (click)="addStep($event)">添加步骤</button>
+      </div>
+    </fieldset>
+    <div class="col-sm-12" style="margin-top:20px;">
+      <button class="btn btn-primary" (click)="submit($event)">提交</button>
+    </div>
+  </form>
+</div>

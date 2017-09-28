@@ -48,6 +48,8 @@ export class ProductComponent implements OnInit {
         err => {
           alert(err);
         });
+    } else {
+      this.newProduct.Limit = 0;
     }
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false;

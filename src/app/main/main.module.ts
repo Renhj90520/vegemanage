@@ -20,9 +20,12 @@ import { ProductPipe } from '../shared/productstate.pipe';
 import { SexPipe } from '../shared/sex.pipe';
 import { MyDatePipe } from '../shared/mydate.pipe';
 import { CateStatePipe } from '../shared/catestate.pipe';
+import { MenuState } from '../shared/menustate.pipe';
 import { HttpClient } from '../shared/httpclient';
 import { DayPipe } from '../shared/day.pipe';
 import { CouponComponent } from '../coupon/coupon.component';
+import { MenuListComponent } from '../menu-list/menu-list.component';
+import { MenuDetailComponent } from '../menu-detail/menu-detail.component';
 
 @NgModule({
   imports: [
@@ -49,7 +52,10 @@ import { CouponComponent } from '../coupon/coupon.component';
     ProductPipe,
     DayPipe,
     MyDatePipe,
-    HomeComponent
+    HomeComponent,
+    MenuListComponent,
+    MenuDetailComponent,
+    MenuState
   ],
   bootstrap: [HomeComponent],
   providers: [HttpClient]

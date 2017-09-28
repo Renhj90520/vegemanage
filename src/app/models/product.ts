@@ -9,4 +9,5 @@ export class Product {
     Description: string;
     CategoryId: number;
     Pictures: any[] = [];
+    Limit: number;
 }
